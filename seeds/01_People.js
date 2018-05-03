@@ -1,14 +1,26 @@
+const _ = require('lodash');
+const faker = require('faker');
+const moment = require('moment');
 
-exports.seed = function(knex, Promise) {
-  // // Deletes ALL existing entries
+exports.seed = (knex, Promise) => {
+  // delete existing entries
   return knex('people').del()
-    .then(function () {
-      // Inserts seed entries
-      return knex('people').insert([{ 
-        name: 'Shreyansh Pandey',
-        age: 33,
-        date_of_birth: '1984-06-15',
-        email : 'me@isomr.co'
-      }]);
+    .then(() => {
+      const seedPeople = _.times(300, () => {
+        const dateNow = moment();
+        const dateOfBirth = moment()
+          .subtract(Math.floor((Math.random() * 100) + 1), 'year')
+          .subtract(Math.floor((Math.random() * 100) + 1), 'day');
+        
+        return {
+          name: faker.fake('{{name.firstName}} {{name.lastName}}'),
+          age: dateNow.diff(dateOfBirth, 'years', false),
+          date_of_birth: moment(dateOfBirth).format('YYYY-MM-DD'),
+          email: faker.fake('{{internet.email}}'),
+        };
+      });
+
+      // insert seed entries
+      return knex('people').insert(seedPeople);
     });
 };

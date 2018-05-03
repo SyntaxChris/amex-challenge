@@ -1,0 +1,13 @@
+{
+  "db": {
+    "development": {
+      "connection": {
+        "host": "DEV_DB_HOST",
+        "user": "DEV_DB_USER",
+        "password": "DEV_DB_PASS",
+        "database": "DB_NAME",
+        "charset": "utf8"
+      }
+    }
+  }
+}
