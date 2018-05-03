@@ -1,26 +1,13 @@
 {
   "db": {
-    "uri": "DB_URI"
-  },
-  "redis": {
-    "uri": "REDIS_URI"
-  },
-
-  "aws": {
-    "accessKeyId": "AWS_ACCESS_KEY_ID",
-    "secretAccessKey": "AWS_SECRET_ACCESS_KEY",
-    "bucket": "AWS_S3_BUCKET_NAME"
-  },
-
-  "slack": {
-    "apiURL": "SLACK_API_URL"
-  },
-
-  "batchplease": {
-    "rootUrl": "BATCH_PLEASE_ROOT_URL"
-  },
-
-  "docchain": {
-    "rootUrl": "DOCCHAIN_ROOT_URL"
+    "development": {
+      "connection": {
+        "host": "DEV_DB_HOST",
+        "user": "DEV_DB_USER",
+        "password": "DEV_DB_PASS",
+        "database": "DB_NAME",
+        "charset": "utf8"
+      }
+    }
   }
 }

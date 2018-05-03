@@ -1,37 +1,17 @@
 {
   "app": {
     "apiVersion": "v1.0",
-
     "defaultQueryLimit": 25,
-    "maxQueryLimit": 100,
-
-    "shipmentBatchPDFsSplitSize": 25
+    "maxQueryLimit": 100
   },
-
   "db": {
-    "uri": "mongodb://localhost:27017/ps-batchful-local"
-  },
-
-  "redis": {
-    "uri": "redis://localhost:6379"
-  },
-
-  "aws": {
-    "accessKeyId": "",
-    "secretAccessKey": "",
-    "region": "us-east-1",
-    "bucket": "batchful.ps.bondco.io"
-  },
-
-  "slack": {
-    "apiURL": "https://hooks.slack.com/services/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"
-  },
-
-  "batchplease": {
-    "rootUrl": "http://batchplease-api-dev.ps.bondco.io/api/v1.0"
-  },
-
-  "docchain": {
-    "rootUrl": "https://docchain-api-dev.ps.bondco.io/api/v1.0"
+    "development": {
+      "migrations": { "tableName": "knex_migrations" },
+      "seeds": { "tableName": "./seeds" },
+      "client": "mysql",
+      "connection": {
+        "charset": "utf8"
+      }
+    }
   }
 }

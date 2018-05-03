@@ -1,10 +1,10 @@
 exports.up = function(knex, Promise) {
   return knex
     .schema
-    .createTable( 'people', function( peopleTable ) {
-      // Primary Key
+    .createTable( 'people', function (peopleTable) {
+      // primary key
       peopleTable.increments();
-      // Data
+      // data schema
       peopleTable.string('name', 50).notNullable();
       peopleTable.integer('age', 50).notNullable();
       peopleTable.date('date_of_birth', 50).notNullable();
@@ -13,6 +13,6 @@ exports.up = function(knex, Promise) {
     })
 };
 
-exports.down = function(knex, Promise) {
+exports.down = function (knex, Promise) {
   return knex.schema.dropTableIfExists('people');
 };
