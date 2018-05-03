@@ -2,7 +2,7 @@ const Boom = require('boom')
 
 module.exports = {
   server: {
-    port: 8000,
+    port: process.env.PORT || 8000,
     routes: {
       validate: {
         failAction: async (request, h, err) => {
