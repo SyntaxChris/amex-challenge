@@ -12,7 +12,7 @@ export const buttons = [
 
 export const formInputs = [
   {
-    label: 'full name',
+    label: 'name',
     placeholder: 'name',
     type: 'text'
   },
@@ -22,7 +22,7 @@ export const formInputs = [
     type: 'date' // type date will render a different form input
   },
   {
-    label: 'email address',
+    label: 'email',
     placeholder: 'email',
     type: 'email'
   }
@@ -41,14 +41,14 @@ export function validateDate (date) {
     const yearsBefore = moment().diff(dateFormat, 'years', false)
     
     if (yearsBefore < 18) {
-      errorMessage = 'Must be 18 or over to register.'
+      errorMessage = 'Must be 18 or over to apply.'
     }
 
     if (yearsBefore > 150) {
       errorMessage = 'Please tell us where the fountain of youth is.'
     }
   } else {
-    errorMessage = 'Please enter a valid date of birth with the following format (mm-dd-yyyy)'
+    errorMessage = 'Please enter a valid date of birth.'
   }
 
   return errorMessage

@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux'
-import app from './app'
 import people from './people'
 
-const rootReducer = combineReducers({ app, people })
+const rootReducer = combineReducers({ people })
 
 export default rootReducer

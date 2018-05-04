@@ -15,7 +15,10 @@ class PersonForm extends Component {
     super(props)
     // add button onClick actions and bind to PersonForm
     this.buttons = buttons.map((btn) => {
-      return { ...btn, action: (label) => this.handleButtonClick(label) }
+      return { 
+        ...btn,
+        action: label => this.handleButtonClick(label)
+      }
     })
     // add form onChange actions and bind to PersonForm
     this.formInputs = formInputs.map((formInput) => {
@@ -35,24 +38,25 @@ class PersonForm extends Component {
         dd: '',
         yyyy: ''
       },
-      email: '',
-      errorFields: [],
-      errorMessages: []
+      email: ''
     }
   }
-
+  // button action
   handleButtonClick () {
     this.validateForm() 
   }
-
-  handleFormErrorMessages (errMsg) {
-    this.setState({ errorMessages: [ ...this.state.errorMessages, errMsg ]})
-  }
-
+  // input action
   handleInputChange (val, type, placeholder) {
     type === 'date'
       ? this.handleDateInputChange(val, placeholder)
       : this.handleTextInputChange(val, placeholder)
+  }
+
+  handleFieldErrors (label, errMsg) {
+    this.setState({ errorFields: [
+      ...this.state.errorFields,
+      { [label]: errMsg }
+    ]})
   }
 
   handleDateInputChange (val, placeholder) {
@@ -84,46 +88,41 @@ class PersonForm extends Component {
   }
 
   validateForm () {
-    const { handleFormError } = this.props
-    // reset error fields
-    this.setState({ errorFields: [] }, () => {
-      const errorFields = []
-      // date validations
-      const dateErrorMessage = validateDate(this.state.date)
-      if (dateErrorMessage) {
-        errorFields.push('date of birth')
-        handleFormError(dateErrorMessage)
-      }
-      // email validations
-      if(!validateEmail(this.state.email)) {
-        errorFields.push('email')
-        handleFormError('Please enter a valid email address.')
-      }
-      // name validations
-      if (!validateName(this.state.name)) {
-        errorFields.push('name')
-      }
-      // check if any errors
-      if (errorFields.length) {
-        this.setState({ errorFields })
-        handleFormError('Please enter a valid name.')
-      } else {
-        // go to preview page
-      }
-    })
+    const { handleFormErrors } = this.props
+    const errorFields = {}
+    // date validations
+    if (validateDate(this.state.date)) {
+      errorFields['date'] = validateDate(this.state.date)
+    }
+    // email validations
+    if(!validateEmail(this.state.email)) {
+      errorFields['email'] = 'Please enter a valid email address.'
+    }
+    // name validations
+    if (!validateName(this.state.name)) {
+      errorFields['name'] ='Please enter a valid name.'
+    }
+    // check if any errors
+    if (Object.keys(errorFields).length) {
+      handleFormErrors(errorFields)
+      return console.log('ERRORS!!')
+    }
+    // clear errors
+    handleFormErrors(errorFields)
+    // go to preview page
+    return console.log('NO ERRORS!!')
   }
 
   render () {
-    const { formTitle, errorFields, ...rest } = this.state
-    const inputValues = rest
+    const { formTitle, ...rest } = this.state
 
     return <Form
       buttons={this.buttons}
-      inputValues={inputValues}
-      errorFields={this.state.errorFields}
+      inputValues={rest}
+      errorFields={this.props.formFieldErrors}
       formInputs={this.formInputs}
       // logo={<FormLogo />}
-      title={this.state.formTitle}
+      title={formTitle}
     />
   }
 }

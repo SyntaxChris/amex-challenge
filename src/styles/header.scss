@@ -30,4 +30,22 @@
       }
     } 
   }
+  .error-bar {
+    position: absolute;
+    height: 0px;
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 0.3s ease-out;
+    &.active {
+      height: 80px;
+    }
+    .error-msg-container {
+      display: none;
+      color: #FF4F41;
+      margin: 0 auto;
+    }
+  }
 }

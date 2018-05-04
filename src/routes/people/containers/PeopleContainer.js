@@ -1,14 +1,15 @@
 import { connect } from 'react-redux'
-import { handleFormError } from '../../../modules/actions/app'
+import { handleFormErrors } from '../../../modules/actions/people'
 import People from '../components/people'
 import React from 'react'
 
 const mapDispatchToProps = {
-  handleFormError
+  handleFormErrors
 }
 
 const mapStateToProps = state => ({
-  fetching: state.people.fetching
+  fetching: state.people.fetching,
+  formFieldErrors: state.people.formFieldErrors
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(People)

@@ -1,11 +1,13 @@
 import {
   FETCHING,
   HANDLE_FETCH_ERROR,
+  HANDLE_FORM_ERRORS,
   REQUEST
 } from '../actions/types'
 
 const initialState = {
-  fetching: false
+  fetching: false,
+  formFieldErrors: {}
 }
 
 function charactersReducer(state = initialState, action) {
@@ -17,6 +19,11 @@ function charactersReducer(state = initialState, action) {
       }
     case HANDLE_FETCH_ERROR:
       return state
+    case HANDLE_FORM_ERRORS:
+      return {
+        ...state,
+        formFieldErrors: action.payload
+      }
     case REQUEST:
       return state
     default:

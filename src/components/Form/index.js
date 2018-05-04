@@ -20,7 +20,7 @@ const Form = ({
     {formInputs.map((formInput, i) => formInput.type === 'date'
       ? <DateInput
         action={formInput.action}
-        errorFields={errorFields}
+        errorMessage={errorFields[formInput.type]}
         inputValues={inputValues.date}
         key={i.toString()}
         label={formInput.label}
@@ -29,7 +29,7 @@ const Form = ({
       />
       : <Input
         action={formInput.action}
-        errorFields={errorFields}
+        errorMessage={errorFields[formInput.label]}
         inputValue={inputValues[formInput.placeholder]}
         key={i.toString()}
         label={formInput.label}

@@ -4,14 +4,15 @@ import React from 'react'
 // text and email input component
 const Input = ({
   action,
-  errorFields,
+  errorMessage,
   inputValue,
   label,
   placeholder,
   type
-}) => <div className={`input-container${_.includes(errorFields, placeholder) ? ' error' : ''}`}>
+}) => <div className={`input-container${errorMessage ? ' error' : ''}`}>
   <div className='label'>{label}</div>
   <input
+    name={label}
     onChange={(e) => action(e.target.value, type, placeholder)}
     type={type}
     placeholder={placeholder}
