@@ -21,6 +21,7 @@ const DateInput = ({
     type='text'
     value={inputValues[placeholder]}
   />)}
+  {errorMessage ? <div className='error-label'>{errorMessage}</div> : null}
 </div>
 
 export default DateInput

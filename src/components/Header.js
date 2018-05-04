@@ -9,16 +9,16 @@ const Header = ({ formFieldErrors }) => <header className='header'>
     <div className='content mid' />
     <div className='content right' />
   </div>
-  <div className={`error-bar${Object.keys(formFieldErrors).length ? ' active' : ''}`}>
+  <div className={`error-bar`}>
     <div className='error-msg-container'>
-      {Object.keys(formFieldErrors).map((val, i) => {
+      {/*Object.keys(formFieldErrors).map((val, i) => {
         return <div
           key={i.toString()}
           className='err-msg'
         >
-          {`${val} field: ${formFieldErrors[val]}`}
+          <div><b>{`${val} field : `}</b></div><div>{`${formFieldErrors[val]}`}</div>
         </div>
-      })}
+      })*/}
     </div>
   </div>
 </header>

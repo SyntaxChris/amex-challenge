@@ -1,6 +1,6 @@
 .form-container {
   width: 50%;
-  min-width: 300px;
+  min-width: 360px;
   max-width: 380px;
   margin: 0 auto;
   background-color: #fff;
@@ -12,7 +12,7 @@
     justify-content: center;
     text-align: center;
     font-size: 28px;
-    // padding-bottom: 20px;
+    color: #2058b2;
     svg {
       position: absolute;
       width: 35px;
@@ -23,15 +23,15 @@
   }
   .input-container {
     position: relative;
-    margin: 30px auto;
+    margin: 40px auto;
     border: 2px solid #41a2db;
     padding: 10px;
     .label {
       position: absolute;
       background-color: #fff;
-      top: -9px;
+      top: -12px;
       left: 10px;
-      font-size: 14px;
+      font-size: 18px;
       color: #41a2db;
       padding: 0 2px;
     }
@@ -40,6 +40,7 @@
       height: 100%;
       padding: 10px;
       font-size: 18px;
+      color: #2058b2;
       outline: none;
       border: none;
       font-family: 'Comfortaa', cursive;
@@ -67,16 +68,15 @@
       .error-label {
         position: absolute;
         background-color: #fff;
-        bottom: -18px;
-        left: 0px;
-        width: 100%;
-        font-size: 14px;
+        bottom: -8px;
+        margin: 0 auto;
+        font-size: 13px;
         color: #FF4F41;
         padding: 0 2px;
         text-align: center;
       }
       input {
-        color: #FF4F41;
+        // color: #FF4F41;
       }
     }
   }

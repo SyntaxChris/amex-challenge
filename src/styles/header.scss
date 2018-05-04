@@ -39,13 +39,31 @@
     flex-direction: column;
     justify-content: center;
     transition: all 0.3s ease-out;
+    .error-msg-container {
+      opacity: 0;
+      color: #FF4F41;
+      width: 100%;
+      margin: 0 auto;
+      transition: all 0.3s ease-out;
+      transition-delay: 0.5s;
+      .err-msg {
+        display: flex;
+        flex-direction: row;
+        div {
+          flex: 1;
+          text-align: right;
+          padding-right: 15px;
+        }
+        div:last-child {
+          text-align: left;
+        }
+      }
+    }
     &.active {
       height: 80px;
-    }
-    .error-msg-container {
-      display: none;
-      color: #FF4F41;
-      margin: 0 auto;
+      .error-msg-container {
+        opacity: 1;
+      }
     }
   }
 }

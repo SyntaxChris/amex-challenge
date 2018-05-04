@@ -18,6 +18,7 @@ const Input = ({
     placeholder={placeholder}
     value={inputValue}
   />
+  {errorMessage ? <div className='error-label'>{errorMessage}</div> : null}
 </div>
 
 export default Input

@@ -35,23 +35,22 @@ export const formInputs = [
 // ======================
 export function validateDate (date) {
   const dateFormat = `${date.yyyy}-${date.mm}-${date.dd}`
-  let errorMessage = ''
 
-  if (moment(dateFormat).isValid()) {
+  if (moment(dateFormat, 'YYYY-MM-DD', true).isValid()) {
     const yearsBefore = moment().diff(dateFormat, 'years', false)
     
     if (yearsBefore < 18) {
-      errorMessage = 'Must be 18 or over to apply.'
+      return 'Must be 18 or over to apply.'
     }
 
     if (yearsBefore > 150) {
-      errorMessage = 'Please tell us where the fountain of youth is.'
+      return 'Please tell us where the fountain of youth is.'
     }
   } else {
-    errorMessage = 'Please enter a valid date of birth.'
+    return 'Please enter a valid date of birth.'
   }
 
-  return errorMessage
+  return ''
 }
 
 export function validateEmail (email) {
