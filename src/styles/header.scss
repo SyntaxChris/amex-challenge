@@ -1,9 +1,11 @@
 .header {
-  position: relative;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
   top: 0;
   height: 80px;
   background-color: #9ed9ff;
-  border-bottom: 2px solid #d3eeff;
+  border-bottom: 2px solid #fff;
   .container {
     display: flex;
     flex-direction: row;

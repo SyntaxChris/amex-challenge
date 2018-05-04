@@ -12,7 +12,7 @@ const store = configureStore()
 // top level routes
 const AppRoutes = ({ animate }) => <BrowserRouter>
   <Switch>
-    <Route path='/' render={()=> <PeopleRoute />} />
+    <Route path='/new-person' render={()=> <PeopleRoute />} />
     <Route path='*' render={()=> <PeopleRoute />}/>
   </Switch>
 </BrowserRouter>

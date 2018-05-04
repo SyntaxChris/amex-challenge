@@ -1,7 +1,8 @@
 .view {
   width: 100%;
+  min-height: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: calc(100vh - 80px);
+  height: 100vh;
 }
