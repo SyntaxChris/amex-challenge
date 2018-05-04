@@ -1,0 +1,31 @@
+.header {
+  position: relative;
+  top: 0;
+  height: 80px;
+  background-color: #9ed9ff;
+  border-bottom: 2px solid #d3eeff;
+  .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    .content {
+      flex: 1;
+      height: 100%;
+      position: relative;
+      &.mid {
+        flex: 2;
+        padding: 8px;
+        height: 80px;
+      }
+      svg {
+        position: absolute;
+        height: 70px;
+        width: 70px;
+        top: 5px;
+        left: 5px;
+      }
+    } 
+  }
+}
