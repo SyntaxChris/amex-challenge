@@ -1,0 +1,51 @@
+.header {
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+  top: 0;
+  height: 80px;
+  background-color: #9ed9ff;
+  border-bottom: 2px solid #fff;
+  .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    .content {
+      flex: 1;
+      height: 100%;
+      position: relative;
+      &.mid {
+        flex: 2;
+        padding: 8px;
+        height: 80px;
+      }
+      svg {
+        position: absolute;
+        height: 70px;
+        width: 70px;
+        top: 5px;
+        left: 5px;
+      }
+    } 
+  }
+  .error-bar {
+    position: absolute;
+    height: 0px;
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 0.3s ease-out;
+    &.active {
+      height: 80px;
+    }
+    .error-msg-container {
+      display: none;
+      color: #FF4F41;
+      margin: 0 auto;
+    }
+  }
+}
