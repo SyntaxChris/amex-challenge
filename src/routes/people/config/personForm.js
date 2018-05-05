@@ -4,26 +4,25 @@ import moment from 'moment'
 // form field components
 
 // =====================
-export const buttons = [
-  { label: 'preview' },
-  // { label: 'back' },
-  // { label: 'next' }
-]
+export const buttons = {
+  newPerson: [{ label: 'Preview' }],
+  previewPerson: [{ label: 'Back' }, { label: 'Submit' }]
+}
 
 export const formInputs = [
   {
     label: 'name',
-    placeholder: 'name',
-    type: 'text'
+    placeholders: ['name'],
+    type: 'name'
   },
   {
     label: 'date of birth',
     placeholders: ['mm', 'dd', 'yyyy'],
-    type: 'date' // type date will render a different form input
+    type: 'date'
   },
   {
     label: 'email',
-    placeholder: 'email',
+    placeholders: ['email'],
     type: 'email'
   }
 ]
@@ -35,23 +34,22 @@ export const formInputs = [
 // ======================
 export function validateDate (date) {
   const dateFormat = `${date.yyyy}-${date.mm}-${date.dd}`
-  let errorMessage = ''
 
-  if (moment(dateFormat).isValid()) {
+  if (moment(dateFormat, 'YYYY-MM-DD', true).isValid()) {
     const yearsBefore = moment().diff(dateFormat, 'years', false)
     
     if (yearsBefore < 18) {
-      errorMessage = 'Must be 18 or over to apply.'
+      return 'Must be 18 or older to apply.'
     }
 
     if (yearsBefore > 150) {
-      errorMessage = 'Please tell us where the fountain of youth is.'
+      return 'Please tell us where the fountain of youth is.'
     }
   } else {
-    errorMessage = 'Please enter a valid date of birth.'
+    return 'Please enter a valid date. ( mm-dd-yyyy )'
   }
 
-  return errorMessage
+  return ''
 }
 
 export function validateEmail (email) {

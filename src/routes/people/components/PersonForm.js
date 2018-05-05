@@ -9,69 +9,111 @@ import {
   validateEmail,
   validateName
 } from '../config/personForm'
+import { withRouter } from 'react-router-dom'
 
 class PersonForm extends Component {
-  constructor (props) {
-    super(props)
-    // add button onClick actions and bind to PersonForm
-    this.buttons = buttons.map((btn) => {
-      return { 
-        ...btn,
-        action: label => this.handleButtonClick(label)
-      }
-    })
-    // add form onChange actions and bind to PersonForm
-    this.formInputs = formInputs.map((formInput) => {
-      return {
-        ...formInput,
-        action: (val, type, placeholder) => {
-          return this.handleInputChange(val, type, placeholder)
-        }
-      }
-    })
-
-    this.state = {
-      formTitle: 'New Person',
-      name: '',
-      date: {
-        mm: '',
-        dd: '',
-        yyyy: ''
-      },
-      email: ''
+  static propTypes () {
+    return {
+      history: React.PropTypes.shape({
+        push: React.PropTypes.func.isRequired
+      })
     }
   }
-  // button action
-  handleButtonClick () {
-    this.validateForm() 
-  }
-  // input action
-  handleInputChange (val, type, placeholder) {
-    type === 'date'
-      ? this.handleDateInputChange(val, placeholder)
-      : this.handleTextInputChange(val, placeholder)
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      errorFields: {},
+      formTitle: 'New Person'
+    }
   }
 
-  handleFieldErrors (label, errMsg) {
-    this.setState({ errorFields: [
-      ...this.state.errorFields,
-      { [label]: errMsg }
-    ]})
+  componentWillMount () {
+    if (!this.props.isValidated) {
+      return this.props.history.push('/new-person')
+    }
+  }
+
+  async handleButtonClick (label) {
+    const {
+      createPerson,
+      formFields,
+      history,
+      validateForm
+    } = this.props
+    if (label === 'Preview') {
+      const formIsValid = await this.validateFormFields()
+      if (!formIsValid) {
+        return validateForm(false)
+      }
+      validateForm(true)
+
+      return history.push('/preview-person')
+    }
+    if (label === 'Back') {
+      if (location.pathname === '/preview-person') {
+        return history.push('/new-person')
+      }
+    }
+    if (label === 'Submit') {
+      const { name, date, email } = formFields
+      const payload = {
+        name,
+        date_of_birth: `${date.yyyy}-${date.mm}-${date.dd}`,
+        email
+      }
+      // attempt to create person
+      createPerson(payload)
+        .then((res) => {
+          if (res.payload.id) {
+            return history.push('/success')
+          }
+          const { errorFields } = this.state
+          errorFields.email = res.payload.response.message
+          this.setState({ errorFields })
+          return history.push('/new-person')
+        })
+    }
+  }
+
+  handleInputChange (val, type, label) {
+    type === 'date'
+      ? this.handleDateInputChange(val, label)
+      : this.handleTextInputChange(val, label)
   }
 
   handleDateInputChange (val, placeholder) {
-    // set length limits
-    if (placeholder === 'mm' && val.length > 2) {
+    if (
+      (placeholder === 'mm' && val.length > 2) ||
+      (placeholder === 'dd' && val.length > 2) ||
+      (placeholder === 'yyyy' && val.length > 4) ||
+      isNaN(val)
+    ) {
       return
     }
-    if (placeholder === 'dd' && val.length > 2) {
-      return
-    }
-    if (placeholder === 'yyyy' && val.length > 4) {
-      return
-    }
+    
+    return this.props.updateFormField('date', {
+      ...this.props.formFields.date,
+      [placeholder]: val
+    })
+  }
 
-    return this.setState({ date: { ...this.state.date, [placeholder]: val } })
+  handleOnBlur (field, value) {
+    if (value) {
+      if (field === 'name') {
+        return this.validateName()
+      }
+      if (field === 'date') {
+        const { mm, dd, yyyy } = this.props.formFields.date
+        // only validate if all date fields have values
+        if (mm && dd && yyyy) {
+          return this.validateDate()
+        }
+      }
+      if (field === 'email') {
+        return this.validateEmail()
+      }
+    }
   }
 
   handleTextInputChange (val, placeholder) {
@@ -83,48 +125,73 @@ class PersonForm extends Component {
     if (placeholder === 'name' && val.length > 50) {
       return
     }
-
-    return this.setState({ [placeholder]: val })
+    
+    return this.props.updateFormField(placeholder, val)
   }
 
-  validateForm () {
+  validateDate () {
+    const errMsg = validateDate(this.props.formFields.date)
+    const { errorFields } = this.state
+    if (errMsg) {
+      errorFields.date = errMsg
+      return this.setState({ errorFields })
+    }
+    const { date, ...rest } = errorFields
+
+    return this.setState({ errorFields: rest })
+  }
+
+  validateEmail () {
+    const { errorFields } = this.state
+    if(!validateEmail(this.props.formFields.email)) {
+      errorFields.email = 'Please enter a valid email address.'
+      return this.setState({ errorFields })
+    }
+    const { email, ...rest } = errorFields
+
+    return this.setState({ errorFields: rest })
+  }
+
+  validateName () {
+    const { errorFields } = this.state
+    if (!validateName(this.props.formFields.name)) {
+      errorFields.name = 'Please enter a valid name.'
+      return this.setState({ errorFields })
+    }
+    const { name, ...rest } = errorFields
+
+    return this.setState({ errorFields: rest })
+  }
+
+  async validateFormFields () {
     const { handleFormErrors } = this.props
-    const errorFields = {}
-    // date validations
-    if (validateDate(this.state.date)) {
-      errorFields['date'] = validateDate(this.state.date)
+    await this.setState({ errorFields: {} })
+    await this.validateName()
+    await this.validateDate()
+    await this.validateEmail()
+    if (await Object.keys(this.state.errorFields).length) {
+      return false
     }
-    // email validations
-    if(!validateEmail(this.state.email)) {
-      errorFields['email'] = 'Please enter a valid email address.'
-    }
-    // name validations
-    if (!validateName(this.state.name)) {
-      errorFields['name'] ='Please enter a valid name.'
-    }
-    // check if any errors
-    if (Object.keys(errorFields).length) {
-      handleFormErrors(errorFields)
-      return console.log('ERRORS!!')
-    }
-    // clear errors
-    handleFormErrors(errorFields)
-    // go to preview page
-    return console.log('NO ERRORS!!')
+
+    return true
   }
 
   render () {
-    const { formTitle, ...rest } = this.state
+    const formProps = {
+      buttons: this.props.preview ? buttons.previewPerson : buttons.newPerson,
+      handleButtonClick: (label) => this.handleButtonClick(label),
+      handleInputChange: (val, type, label) => this.handleInputChange(val, type, label),
+      handleOnBlur: (field, value) => this.handleOnBlur(field, value),
+      inputValues: this.props.formFields,
+      errorFields: this.state.errorFields,
+      formInputs: formInputs,
+      offset: this.props.offset,
+      preview: this.props.preview,
+      title: this.props.title
+    }
 
-    return <Form
-      buttons={this.buttons}
-      inputValues={rest}
-      errorFields={this.props.formFieldErrors}
-      formInputs={this.formInputs}
-      // logo={<FormLogo />}
-      title={formTitle}
-    />
+    return <Form {...formProps} />
   }
 }
 
-export default PersonForm
+export default withRouter(PersonForm)

@@ -6,8 +6,8 @@ exports.up = function(knex, Promise) {
       peopleTable.increments();
       // data schema
       peopleTable.string('name', 50).notNullable();
-      peopleTable.integer('age', 50).notNullable();
-      peopleTable.date('date_of_birth', 50).notNullable();
+      peopleTable.integer('age').notNullable();
+      peopleTable.date('date_of_birth').notNullable();
       peopleTable.string('email', 250).notNullable().unique();
       peopleTable.timestamp('created_at').notNullable();
     })

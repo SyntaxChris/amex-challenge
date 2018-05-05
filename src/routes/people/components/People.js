@@ -1,15 +1,10 @@
 import PersonForm from './PersonForm'
 import PropTypes from 'prop-types'
 import React from 'react'
-import '../styles/view.scss'
+import '../../../styles/view.scss'
 
-const People = ({ formFieldErrors, handleFormErrors }) => <div
-  className='view people'
-> 
-  <PersonForm
-    formFieldErrors={formFieldErrors}
-    handleFormErrors={handleFormErrors}
-  />
+const People = props => <div className='view people'> 
+  <PersonForm {...props} />
 </div>
 
 export default People

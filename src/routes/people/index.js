@@ -1,5 +1,6 @@
 import Loadable from 'react-loadable'
 import React from 'react'
+import { Redirect } from 'react-router-dom'
 
 // Loadable component takes advantage of dynamic imports so we only render what is requested
 const PeopleRoute = Loadable({
