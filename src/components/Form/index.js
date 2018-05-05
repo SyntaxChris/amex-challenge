@@ -1,11 +1,14 @@
-import EditInputs from './EditInputs'
-import Input from './Input'
-import PreviewInputs from './PreviewInputs'
+import CheckMark from './components/CheckMark'
+import EditInputs from './components/EditInputs'
+import Input from './components/Input'
+import PreviewInputs from './components/PreviewInputs'
 import React from 'react'
-import './form.scss'
+import Record from './components/Record'
+import './styles/form.scss'
 
 const Form = ({
   buttons,
+  disableTabs,
   errorFields,
   formInputs,
   handleButtonClick,
@@ -13,7 +16,7 @@ const Form = ({
   handleOnBlur,
   inputValues,
   offset,
-  preview,
+  successRecord,
   title
 }) => <div className='form-container'>
   <div className='form-header'>
@@ -31,17 +34,20 @@ const Form = ({
           handleInputChange={handleInputChange}
           handleOnBlur={handleOnBlur}
           inputValues={inputValues}
-          preview={preview}
+          disableTabs={disableTabs}
         />
       </div>
       <div className='form-view'>
         <PreviewInputs
           formInputs={formInputs}
           inputValues={inputValues}
-          preview={preview}
         />
       </div>
-      <div className='form-view'></div>
+      <div className='form-view'>
+        {successRecord.name
+          ? <Record record={successRecord} />
+          : null}
+      </div>
     </div>
   </form>
   <div className='btn-container'>

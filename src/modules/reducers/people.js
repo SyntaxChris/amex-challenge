@@ -1,4 +1,5 @@
 import {
+  CLEAR_FORM,
   HANDLE_PERSON_CREATE_ERROR,
   HANDLE_PERSON_CREATE_SUCCESS,
   HANDLE_FORM_ERRORS,
@@ -20,28 +21,42 @@ const initialState = {
     email: ''
   },
   formFieldErrors: {},
-  isValidated: false
+  isValidated: false,
+  successRecord: {
+    name: '',
+    age: '',
+    date_of_birth: '',
+    email: ''
+  }
 }
 
 function charactersReducer(state = initialState, action) {
   switch (action.type) {
+    case CLEAR_FORM:
+      return initialState
     case LOADING:
       return {
         ...state,
         loading: action.payload
       }
     case HANDLE_PERSON_CREATE_ERROR:
-      console.log('err', action.payload)
       return state
     case HANDLE_PERSON_CREATE_SUCCESS:
-      console.log('success', action.payload)
-      return {
-        ...state
-      }
-    case HANDLE_FORM_ERRORS:
+      const {
+        name,
+        age,
+        date_of_birth,
+        email
+      } = action.payload
+
       return {
         ...state,
-        formFieldErrors: action.payload
+        successRecord: {
+          age,
+          date_of_birth,
+          email,
+          name
+        }
       }
     case REQUEST:
       return state

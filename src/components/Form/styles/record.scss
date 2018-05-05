@@ -1,0 +1,79 @@
+.record {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  .record-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #41a2db;
+    .row {
+      position: relative;
+      width: 95%;
+      font-size: 22px;
+      padding: 16px;
+      border-top: 2px solid #41a2db;
+      border-left: 2px solid #41a2db;
+      margin-top: 15px;
+      &:first-child {
+        margin-top: 0px;
+      }
+      &:nth-child(2) {
+        svg polyline {
+          animation-delay: 0.6s;
+        }
+      }
+      &:nth-child(3) {
+        svg polyline {
+          animation-delay: 0.8s;
+        }
+      }
+      &:nth-child(4) {
+        svg polyline {
+          animation-delay: 1s;
+        }
+      }
+      .title {
+        position: absolute;
+        top: -16px;
+        left: 12px;
+        background-color: #fff;
+        font-size: 21px;
+        padding: 0 5px;
+      }
+      .info {
+        font-family: 'Open Sans', sans-serif;
+      }
+      svg {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        top: -12px;
+        right: -20px;
+        background-color: #fff;
+        circle, polyline {
+          fill: none;
+          stroke-width: 15;
+          stroke: #05c49b;
+        }
+        polyline {
+          stroke-dashoffset: 242;
+          stroke-dasharray: 242;
+          stroke-width: 15;
+          animation: .2s ease-in check;
+          animation-fill-mode: forwards;
+          animation-delay: 0.5s;
+        }
+      }
+    }
+  }
+}
+
+@keyframes check {
+  from {
+    stroke-dashoffset: 242;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}

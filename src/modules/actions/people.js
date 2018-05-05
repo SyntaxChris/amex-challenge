@@ -1,6 +1,7 @@
 import { browserHistory } from 'react-router'
 import { CALL_API } from 'redux-api-middleware'
 import {
+  CLEAR_FORM,
   HANDLE_FETCH_ERROR,
   HANDLE_FORM_ERRORS,
   LOADING,
@@ -10,6 +11,11 @@ import {
   UPDATE_FORM_FIELDS,
   VALIDATE_FORM
 } from './types'
+
+export const clearForm = () => ({
+  type: CLEAR_FORM,
+  payload: null
+})
 
 export const loading = loading => ({
   type: LOADING,

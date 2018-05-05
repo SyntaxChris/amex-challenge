@@ -1,3 +1,4 @@
+export const CLEAR_FORM = 'CLEAR_FORM'
 export const HANDLE_FETCH_ERROR = 'HANDLE_FETCH_ERROR'
 export const HANDLE_FORM_ERRORS = 'HANDLE_FORM_ERRORS'
 export const LOADING = 'LOADING'

@@ -23,26 +23,30 @@ class PersonForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      errorFields: {},
-      formTitle: 'New Person'
+      errorFields: {}
     }
   }
 
   componentWillMount () {
-    if (!this.props.isValidated) {
+    // redirect to new-person if form isn't validated
+    if (!this.props.isValidated && location.pathname !== '/new-person') {
       return this.props.history.push('/new-person')
     }
   }
 
-  async handleButtonClick (label) {
+  async handleButtonClick (btnLabel) {
     const {
+      clearForm,
       createPerson,
       formFields,
       history,
       validateForm
     } = this.props
-    if (label === 'Preview') {
+
+    if (btnLabel === 'Preview') {
+      // validate form
       const formIsValid = await this.validateFormFields()
+      // set state for redirect when component mounts
       if (!formIsValid) {
         return validateForm(false)
       }
@@ -50,12 +54,19 @@ class PersonForm extends Component {
 
       return history.push('/preview-person')
     }
-    if (label === 'Back') {
+    if (btnLabel === 'Back') {
       if (location.pathname === '/preview-person') {
         return history.push('/new-person')
       }
+      // clear person form to initial state
+      clearForm()
+      // clear errors and go back to new person form
+      return this.setState({ errorFields: {} }, () => {
+        return history.push('/new-person')
+      })
     }
-    if (label === 'Submit') {
+    if (btnLabel === 'Submit') {
+      // submit new record
       this.postNewPersonRecord()
     }
   }
@@ -71,12 +82,13 @@ class PersonForm extends Component {
     // attempt to create person
     createPerson(payload)
       .then((res) => {
-        if (res.payload.id) {
+        if (res.payload.age) {
           return history.push('/success')
         }
         const { errorFields } = this.state
         errorFields.email = res.payload.response.message
         this.setState({ errorFields })
+
         return history.push('/new-person')
       })
   }
@@ -184,6 +196,7 @@ class PersonForm extends Component {
   render () {
     const formProps = {
       buttons: buttons[this.props.offset],
+      disableTabs: location.pathname !== '/new-person',
       handleButtonClick: (label) => this.handleButtonClick(label),
       handleInputChange: (val, type, label) => this.handleInputChange(val, type, label),
       handleOnBlur: (field, value) => this.handleOnBlur(field, value),
@@ -191,7 +204,7 @@ class PersonForm extends Component {
       errorFields: this.state.errorFields,
       formInputs: formInputs,
       offset: this.props.offset,
-      preview: this.props.preview,
+      successRecord: this.props.successRecord,
       title: this.props.title
     }
 

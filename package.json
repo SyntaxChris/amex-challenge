@@ -38,6 +38,7 @@
     "got": "^8.2.0",
     "hapi": "^17.2.1",
     "html-loader": "^0.5.5",
+    "inert": "^5.1.0",
     "joi": "^13.1.2",
     "joi-date-extensions": "^1.2.0",
     "knex": "^0.14.6",

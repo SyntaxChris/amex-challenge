@@ -1,10 +1,14 @@
 const Boom = require('boom')
+const Path = require('path')
 
 module.exports = {
   server: {
     port: process.env.PORT || 8000,
     routes: {
       cors: true,
+      files: {
+        relativeTo: Path.join(__dirname, './dist')
+      },
       validate: {
         failAction: async (request, h, err) => {
           if (process.env.NODE_ENV === 'production') {
@@ -21,9 +25,8 @@ module.exports = {
 
   register: {
     plugins: [
-      {
-        plugin: './lib'
-      },
+      { plugin: 'inert' },
+      { plugin: './lib' },
       { plugin: 'blipp' },
       {
         plugin: 'good',
