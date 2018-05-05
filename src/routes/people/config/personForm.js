@@ -6,7 +6,7 @@ import moment from 'moment'
 // =====================
 export const buttons = {
   newPerson: [{ label: 'Preview' }],
-  previewPerson: [{ label: 'Submit' }]
+  previewPerson: [{ label: 'Back' }, { label: 'Submit' }]
 }
 
 export const formInputs = [

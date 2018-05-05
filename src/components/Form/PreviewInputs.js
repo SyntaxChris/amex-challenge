@@ -8,9 +8,14 @@ const PreviewInputs = ({
   key={i.toString()}
   className='input-container preview'
 > 
-  {console.log(formInput)}
   <div className='label'>{formInput.label}</div>
-  <input readOnly={true} />
+  <input
+    readOnly={true}
+    tabIndex={-1}
+    value={formInput.type === 'date'
+      ? `${inputValues.date.mm}-${inputValues.date.dd}-${inputValues.date.yyyy}`
+      : inputValues[formInput.type]}
+    />
 </div>)
 
 export default PreviewInputs

@@ -27,35 +27,68 @@ class PersonForm extends Component {
       formTitle: 'New Person'
     }
   }
-  // button action
-  async handleButtonClick () {
-    const formIsValid = await this.validateForm()
 
-    if (!formIsValid) {
-      return console.log('ERRORS')
+  componentWillMount () {
+    if (!this.props.isValidated) {
+      return this.props.history.push('/new-person')
     }
-
-    return this.props.history.push('/preview-person')
   }
-  // input actions
+
+  async handleButtonClick (label) {
+    const {
+      createPerson,
+      formFields,
+      history,
+      validateForm
+    } = this.props
+    if (label === 'Preview') {
+      const formIsValid = await this.validateFormFields()
+      if (!formIsValid) {
+        return validateForm(false)
+      }
+      validateForm(true)
+
+      return history.push('/preview-person')
+    }
+    if (label === 'Back') {
+      if (location.pathname === '/preview-person') {
+        return history.push('/new-person')
+      }
+    }
+    if (label === 'Submit') {
+      const { name, date, email } = formFields
+      const payload = {
+        name,
+        date_of_birth: `${date.yyyy}-${date.mm}-${date.dd}`,
+        email
+      }
+      // attempt to create person
+      createPerson(payload)
+        .then((res) => {
+          if (res.payload.id) {
+            return history.push('/success')
+          }
+          const { errorFields } = this.state
+          errorFields.email = res.payload.response.message
+          this.setState({ errorFields })
+          return history.push('/new-person')
+        })
+    }
+  }
+
   handleInputChange (val, type, label) {
     type === 'date'
       ? this.handleDateInputChange(val, label)
       : this.handleTextInputChange(val, label)
   }
-  // date input action
+
   handleDateInputChange (val, placeholder) {
-    // set length limits
-    if (placeholder === 'mm' && val.length > 2) {
-      return
-    }
-    if (placeholder === 'dd' && val.length > 2) {
-      return
-    }
-    if (placeholder === 'yyyy' && val.length > 4) {
-      return
-    }
-    if (isNaN(val)) {
+    if (
+      (placeholder === 'mm' && val.length > 2) ||
+      (placeholder === 'dd' && val.length > 2) ||
+      (placeholder === 'yyyy' && val.length > 4) ||
+      isNaN(val)
+    ) {
       return
     }
     
@@ -70,7 +103,6 @@ class PersonForm extends Component {
       if (field === 'name') {
         return this.validateName()
       }
-
       if (field === 'date') {
         const { mm, dd, yyyy } = this.props.formFields.date
         // only validate if all date fields have values
@@ -78,7 +110,6 @@ class PersonForm extends Component {
           return this.validateDate()
         }
       }
-
       if (field === 'email') {
         return this.validateEmail()
       }
@@ -132,14 +163,12 @@ class PersonForm extends Component {
     return this.setState({ errorFields: rest })
   }
 
-  async validateForm () {
+  async validateFormFields () {
     const { handleFormErrors } = this.props
-
     await this.setState({ errorFields: {} })
     await this.validateName()
     await this.validateDate()
     await this.validateEmail()
-
     if (await Object.keys(this.state.errorFields).length) {
       return false
     }
@@ -148,17 +177,20 @@ class PersonForm extends Component {
   }
 
   render () {
-    return <Form
-      buttons={this.props.preview ? buttons.previewPerson : buttons.newPerson}
-      handleButtonClick={() => this.handleButtonClick()}
-      handleInputChange={(val, type, label) => this.handleInputChange(val, type, label)}
-      handleOnBlur={(field, value) => this.handleOnBlur(field, value)}
-      inputValues={this.props.formFields}
-      errorFields={this.state.errorFields}
-      formInputs={formInputs}
-      preview={this.props.preview}
-      title={this.props.title}
-    />
+    const formProps = {
+      buttons: this.props.preview ? buttons.previewPerson : buttons.newPerson,
+      handleButtonClick: (label) => this.handleButtonClick(label),
+      handleInputChange: (val, type, label) => this.handleInputChange(val, type, label),
+      handleOnBlur: (field, value) => this.handleOnBlur(field, value),
+      inputValues: this.props.formFields,
+      errorFields: this.state.errorFields,
+      formInputs: formInputs,
+      offset: this.props.offset,
+      preview: this.props.preview,
+      title: this.props.title
+    }
+
+    return <Form {...formProps} />
   }
 }
 

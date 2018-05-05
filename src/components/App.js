@@ -15,11 +15,27 @@ const AppRoutes = ({ animate }) => <BrowserRouter>
   <Switch>
     <Route
       path='/new-person'
-      render={()=> <PeopleRoute title={'New Person'} />}
+      render={()=> <PeopleRoute
+        offset={0}
+        preview={false}
+        title={'NEW PERSON'}
+      />}
     />
     <Route
       path='/preview-person'
-      render={()=> <PeopleRoute preview={true} title={'Preview'} />}
+      render={()=> <PeopleRoute
+        offset={1}
+        preview={true}
+        title={'PREVIEW'}
+      />}
+    />
+    <Route
+      path='/success'
+      render={()=> <PeopleRoute
+        offset={2}
+        preview={true}
+        title={'SUCCESS'}
+      />}
     />
     <Redirect to='/new-person' />
   </Switch>

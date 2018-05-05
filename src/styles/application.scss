@@ -1,4 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Abel');
+@import url('https://fonts.googleapis.com/css?family=Exo+2');
+@import url('https://fonts.googleapis.com/css?family=Play');
+
+
 
 html {
   box-sizing: border-box;
@@ -9,8 +13,11 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: 'Abel', sans-serif;
+  // font-family: 'Abel', sans-serif;
+  // font-family: 'Exo 2', sans-serif;
+  font-family: 'Play', sans-serif;
   background-color: #2e77bc;
+  background: linear-gradient(90deg, #69a4db, #2e77bc);
 }
 
 body {

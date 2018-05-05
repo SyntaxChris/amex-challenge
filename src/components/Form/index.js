@@ -12,6 +12,8 @@ const Form = ({
   handleInputChange,
   handleOnBlur,
   inputValues,
+  offset,
+  preview,
   title
 }) => <div className='form-container'>
   <div className='form-header'>
@@ -20,7 +22,7 @@ const Form = ({
   <form>
     <div
       className='form-scroller'
-      // style={{ marginLeft: '-100%' }}
+      style={{ marginLeft: `-${offset * 100}%` }}
     >
       <div className='form-view'>
         <EditInputs
@@ -29,13 +31,15 @@ const Form = ({
           handleInputChange={handleInputChange}
           handleOnBlur={handleOnBlur}
           inputValues={inputValues}
+          preview={preview}
         />
       </div>
       <div className='form-view'>
-        {/*<PreviewInputs
-                  formInputs={formInputs}
-                  inputValues={inputValues}
-                />*/}
+        <PreviewInputs
+          formInputs={formInputs}
+          inputValues={inputValues}
+          preview={preview}
+        />
       </div>
       <div className='form-view'></div>
     </div>

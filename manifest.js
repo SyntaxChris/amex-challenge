@@ -4,6 +4,7 @@ module.exports = {
   server: {
     port: process.env.PORT || 8000,
     routes: {
+      cors: true,
       validate: {
         failAction: async (request, h, err) => {
           if (process.env.NODE_ENV === 'production') {
