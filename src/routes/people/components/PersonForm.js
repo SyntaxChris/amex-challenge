@@ -56,24 +56,29 @@ class PersonForm extends Component {
       }
     }
     if (label === 'Submit') {
-      const { name, date, email } = formFields
-      const payload = {
-        name,
-        date_of_birth: `${date.yyyy}-${date.mm}-${date.dd}`,
-        email
-      }
-      // attempt to create person
-      createPerson(payload)
-        .then((res) => {
-          if (res.payload.id) {
-            return history.push('/success')
-          }
-          const { errorFields } = this.state
-          errorFields.email = res.payload.response.message
-          this.setState({ errorFields })
-          return history.push('/new-person')
-        })
+      this.postNewPersonRecord()
     }
+  }
+
+  postNewPersonRecord () {
+    const { createPerson, formFields, history } = this.props
+    const { name, date, email } = formFields
+    const payload = {
+      name,
+      date_of_birth: `${date.yyyy}-${date.mm}-${date.dd}`,
+      email
+    }
+    // attempt to create person
+    createPerson(payload)
+      .then((res) => {
+        if (res.payload.id) {
+          return history.push('/success')
+        }
+        const { errorFields } = this.state
+        errorFields.email = res.payload.response.message
+        this.setState({ errorFields })
+        return history.push('/new-person')
+      })
   }
 
   handleInputChange (val, type, label) {
@@ -178,7 +183,7 @@ class PersonForm extends Component {
 
   render () {
     const formProps = {
-      buttons: this.props.preview ? buttons.previewPerson : buttons.newPerson,
+      buttons: buttons[this.props.offset],
       handleButtonClick: (label) => this.handleButtonClick(label),
       handleInputChange: (val, type, label) => this.handleInputChange(val, type, label),
       handleOnBlur: (field, value) => this.handleOnBlur(field, value),

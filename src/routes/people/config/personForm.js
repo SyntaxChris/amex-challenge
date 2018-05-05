@@ -4,10 +4,11 @@ import moment from 'moment'
 // form field components
 
 // =====================
-export const buttons = {
-  newPerson: [{ label: 'Preview' }],
-  previewPerson: [{ label: 'Back' }, { label: 'Submit' }]
-}
+export const buttons = [
+  [{ label: 'Preview' }],
+  [{ label: 'Back' }, { label: 'Submit' }],
+  [{ label: 'Back' }]
+]
 
 export const formInputs = [
   {
@@ -37,8 +38,11 @@ export function validateDate (date) {
 
   if (moment(dateFormat, 'YYYY-MM-DD', true).isValid()) {
     const yearsBefore = moment().diff(dateFormat, 'years', false)
-    
+
     if (yearsBefore < 18) {
+      if (yearsBefore < 0) {
+        return 'Wow, someone from the future!'
+      }
       return 'Must be 18 or older to apply.'
     }
 

@@ -44,11 +44,4 @@ export const createPerson = (payload, history) => dispatch => {
       types: [REQUEST, HANDLE_PERSON_CREATE_SUCCESS, HANDLE_PERSON_CREATE_ERROR]
     }
   })
-  // .then(res => {
-  //   console.log('RESPONSE', res)
-  //   if (res.payload.id) {
-  //     return history.push('/success')
-  //   }
-
-  // })
 }

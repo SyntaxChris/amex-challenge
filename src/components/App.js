@@ -4,7 +4,6 @@ import Header from './Header'
 import { Provider } from 'react-redux'
 import React, { Component } from 'react'
 import PeopleRoute from '../routes/people'
-import PreviewRoute from '../routes/preview'
 import '../styles/application.scss'
 
 // initialize store
