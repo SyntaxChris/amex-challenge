@@ -4,6 +4,7 @@ import Header from './Header'
 import { Provider } from 'react-redux'
 import React, { Component } from 'react'
 import PeopleRoute from '../routes/people'
+import PreviewRoute from '../routes/preview'
 import '../styles/application.scss'
 
 // initialize store
@@ -12,8 +13,15 @@ const store = configureStore()
 // top level routes
 const AppRoutes = ({ animate }) => <BrowserRouter>
   <Switch>
-    <Route path='/new-person' render={()=> <PeopleRoute />} />
-    <Route path='*' render={()=> <PeopleRoute />}/>
+    <Route
+      path='/new-person'
+      render={()=> <PeopleRoute title={'New Person'} />}
+    />
+    <Route
+      path='/preview-person'
+      render={()=> <PeopleRoute preview={true} title={'Preview'} />}
+    />
+    <Redirect to='/new-person' />
   </Switch>
 </BrowserRouter>
 

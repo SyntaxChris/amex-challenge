@@ -5,7 +5,8 @@ const config = {
     historyApiFallback: true,
     port: 3000
   },
-  entry: './src/index.js',
+  // entry: './src/index.js',
+  entry: ['babel-polyfill', './src/index.js'],
   plugins: [],
   module: {
     rules: []

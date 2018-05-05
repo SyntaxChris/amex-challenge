@@ -1,18 +1,21 @@
 .form-container {
+  position: relative;
   width: 50%;
   min-width: 360px;
-  max-width: 380px;
+  max-width: 420px;
   margin: 0 auto;
   background-color: #fff;
-  padding: 20px;
+  overflow: hidden;
   .form-header {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: 20px;
     text-align: center;
-    font-size: 28px;
+    font-size: 30px;
     color: #2058b2;
+    border-bottom: 1px solid #9ed9ff;
     svg {
       position: absolute;
       width: 35px;
@@ -21,70 +24,98 @@
       left: 10px;
     }
   }
-  .input-container {
-    position: relative;
-    margin: 40px auto;
-    border: 2px solid #41a2db;
-    padding: 10px;
-    .label {
-      position: absolute;
-      background-color: #fff;
-      top: -12px;
-      left: 10px;
-      font-size: 18px;
-      color: #41a2db;
-      padding: 0 2px;
+  .form-scroller {
+    width: 300%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    .form-view {
+      display: relative;
+      flex: 1;
+      padding: 0 20px;
     }
-    input {
-      width: 100%;
-      height: 100%;
-      padding: 10px;
-      font-size: 18px;
-      color: #2058b2;
-      outline: none;
-      border: none;
-      font-family: 'Comfortaa', cursive;
-      &::placeholder {
-        font-family: 'Comfortaa', cursive;
-        color: #bbc7ce;
+    .input-container {
+      position: relative;
+      margin: 40px auto;
+      border: 2px solid #41a2db;
+      padding: 12px;
+      &:first-child {
+        margin-top: 20px;
       }
-      &:focus {
-        background-color: rgba(159, 214, 245, 0.3);
+      &:last-child {
+        margin-bottom: 20px;
       }
-    }
-    &.date {
-      input {
-        width: 33.33%;
-        text-align: center;
-      }
-    }
-    &.error {
-      border: 2px solid #FF4F41;
       .label {
-        color: #FF4F41;
-        animation: shake 0.8s ease-in;
-        transform: translate3d(0, 0, 0);
-      }
-      .error-label {
         position: absolute;
         background-color: #fff;
-        bottom: -8px;
-        margin: 0 auto;
-        font-size: 13px;
-        color: #FF4F41;
+        top: -16px;
+        left: 12px;
+        font-size: 21px;
+        color: #41a2db;
         padding: 0 2px;
-        text-align: center;
       }
       input {
-        // color: #FF4F41;
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        font-size: 18px;
+        color: #2058b2;
+        outline: none;
+        border: none;
+        background-color: #fff;
+        font-size: 24px;     
+        font-family: 'Abel', sans-serif;
+        &::placeholder {          
+          font-family: 'Abel', sans-serif;
+          color: #bbc7ce;
+          font-size: 24px;
+        }
+        &:read-only {
+          &:focus {
+            background-color: #fff;
+          }
+        }
+        &:focus {
+          background-color: rgba(159, 214, 245, 0.3);
+        }
+      }
+      &.date {
+        input {
+          width: 33.33%;
+          text-align: center;
+        }
+      }
+      &.error {
+        border: 2px solid #FF4F41;
+        .label {
+          color: #FF4F41;
+          animation: shake 0.8s ease-in;
+          transform: translate3d(0, 0, 0);
+        }
+        .error-label {
+          position: absolute;
+          background-color: #fff;
+          bottom: -10px;
+          margin: 0 auto;
+          font-size: 16px;
+          color: #FF4F41;
+          padding: 0 2px;
+          text-align: center;
+        }
+        input {
+          // color: #FF4F41;
+        }
       }
     }
   }
+  
   .btn-container {
     position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding: 20px;
+    border-top: 1px solid #9ed9ff;
     button {
       flex: 1;
       margin-right: 5px;
@@ -92,8 +123,9 @@
       outline: none;
       background-color: #05c49b;
       padding: 15px 20px;
-      font-size: 22px;
-      font-family: 'Comfortaa', cursive;
+      font-size: 26px;      
+      font-family: 'Abel', sans-serif;
+
       color: #fff;
       opacity: 0.8;
       cursor: pointer;
@@ -117,10 +149,10 @@
   }
 
   30%, 50%, 70% {
-    transform: translate3d(-3px, 0, 0);
+    transform: translate3d(-5px, 0, 0);
   }
 
   40%, 60% {
-    transform: translate3d(3px, 0, 0);
+    transform: translate3d(5px, 0, 0);
   }
 }

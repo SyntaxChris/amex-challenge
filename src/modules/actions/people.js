@@ -4,10 +4,16 @@ import {
   FETCHING,
   HANDLE_FETCH_ERROR,
   HANDLE_FORM_ERRORS,
-  REQUEST
+  REQUEST,
+  UPDATE_FORM_FIELDS
 } from './types'
 
 export const handleFormErrors = (errorMsg) => ({
   type: HANDLE_FORM_ERRORS,
   payload: errorMsg
+})
+
+export const updateFormField = (attr, val) => ({
+  type: UPDATE_FORM_FIELDS,
+  payload: { attr, val }
 })
