@@ -3,6 +3,7 @@ import {
   clearForm,
   createPerson,
   handleFormErrors,
+  showLoader,
   updateFormField,
   validateForm
 } from '../../../modules/actions/people'
@@ -13,6 +14,7 @@ const mapDispatchToProps = {
   clearForm,
   createPerson,
   handleFormErrors,
+  showLoader,
   updateFormField,
   validateForm
 }
@@ -22,6 +24,7 @@ const mapStateToProps = state => ({
   formFields: state.people.formFields,
   formFieldErrors: state.people.formFieldErrors,
   isValidated: state.people.isValidated,
+  loading: state.people.loading,
   successRecord: state.people.successRecord
 })
 

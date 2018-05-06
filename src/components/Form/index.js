@@ -1,6 +1,7 @@
 import CheckMark from './components/CheckMark'
 import EditInputs from './components/EditInputs'
 import Input from './components/Input'
+import Loader from './components/Loader'
 import PreviewInputs from './components/PreviewInputs'
 import React from 'react'
 import Record from './components/Record'
@@ -15,10 +16,12 @@ const Form = ({
   handleInputChange,
   handleOnBlur,
   inputValues,
+  loading,
   offset,
   successRecord,
   title
 }) => <div className='form-container'>
+  {loading ? <Loader /> : null}
   <div className='form-header'>
     <div className='title'>{title}</div>
   </div>

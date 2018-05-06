@@ -18,7 +18,7 @@ export const clearForm = () => ({
   payload: null
 })
 
-export const loading = loading => ({
+export const showLoader = loading => ({
   type: LOADING,
   payload: loading
 })

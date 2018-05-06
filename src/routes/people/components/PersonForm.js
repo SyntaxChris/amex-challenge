@@ -72,16 +72,23 @@ class PersonForm extends Component {
   }
 
   postNewPersonRecord () {
-    const { createPerson, formFields, history } = this.props
+    const {
+      createPerson,
+      formFields,
+      history,
+      showLoader
+    } = this.props
     const { name, date, email } = formFields
     const payload = {
       name,
       date_of_birth: `${date.yyyy}-${date.mm}-${date.dd}`,
       email
     }
+    showLoader(true)
     // attempt to create person
     createPerson(payload)
       .then((res) => {
+        showLoader(false)
         if (res.payload.age) {
           return history.push('/success')
         }
@@ -197,12 +204,13 @@ class PersonForm extends Component {
     const formProps = {
       buttons: buttons[this.props.offset],
       disableTabs: location.pathname !== '/new-person',
+      errorFields: this.state.errorFields,
+      formInputs: formInputs,
       handleButtonClick: (label) => this.handleButtonClick(label),
       handleInputChange: (val, type, label) => this.handleInputChange(val, type, label),
       handleOnBlur: (field, value) => this.handleOnBlur(field, value),
       inputValues: this.props.formFields,
-      errorFields: this.state.errorFields,
-      formInputs: formInputs,
+      loading: this.props.loading,
       offset: this.props.offset,
       successRecord: this.props.successRecord,
       title: this.props.title
