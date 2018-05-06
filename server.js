@@ -14,14 +14,14 @@ async function makeServer() {
   }
 }
 
-// function keepAwake () {
-//   console.log('------ keep awake ------');
-//   return http.get(process.env.APP_URL);
-// }
+function keepAwake () {
+  console.log('------ keep awake ------');
+  return http.get(process.env.APP_URL);
+}
 
 if (!module.parent) {
   makeServer()
-  // if (process.env.NODE_ENV === 'production') {
-  //   setInterval(function() { keepAwake() }, 300000) // every 5 minutes
-  // }
+  if (process.env.NODE_ENV === 'production') {
+    setInterval(function() { keepAwake() }, 300000) // every 5 minutes
+  }
 }
