@@ -5,7 +5,16 @@
         "host": "DEV_DB_HOST",
         "user": "DEV_DB_USER",
         "password": "DEV_DB_PASS",
-        "database": "DB_NAME",
+        "database": "DEV_DB_NAME",
+        "charset": "utf8"
+      }
+    },
+    "production": {
+      "connection": {
+        "host": "DATABASE_HOST",
+        "user": "DATABASE_USER",
+        "password": "DATABASE_PASSWORD",
+        "database": "DATABASE",
         "charset": "utf8"
       }
     }

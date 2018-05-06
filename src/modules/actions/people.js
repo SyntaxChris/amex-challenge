@@ -1,3 +1,4 @@
+import { apiConfig } from '../../../config/api'
 import { browserHistory } from 'react-router'
 import { CALL_API } from 'redux-api-middleware'
 import {
@@ -40,7 +41,7 @@ export const validateForm = (validate) => ({
 export const createPerson = (payload, history) => dispatch => {
   return dispatch({
     [CALL_API]: {
-      endpoint: `http://127.0.0.1:8000/v1.0/people`,
+      endpoint: `${apiConfig[process.env.NODE_ENV]}/people`,
       method: 'POST',
       body: JSON.stringify({
         name: payload.name,

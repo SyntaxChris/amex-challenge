@@ -1,3 +1,4 @@
+const S3Plugin = require('webpack-s3-plugin')
 const webpack = require('webpack')
 const path = require('path')
 const config = {
@@ -5,7 +6,6 @@ const config = {
     historyApiFallback: true,
     port: 3000
   },
-  // entry: './src/index.js',
   entry: ['babel-polyfill', './src/index.js'],
   plugins: [],
   module: {
@@ -87,6 +87,24 @@ config.module.rules.push({
   ]
 })
 config.plugins.push(extractStyles, autoPrefixer)
+
+// Asset deployment
+// ------------------------------------
+if (process.env.NODE_ENV === 'production') {
+  config.plugins.push(
+    new S3Plugin({
+      directory: 'dist',
+      s3Options: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        region: 'us-east-1'
+      },
+      s3UploadOptions: {
+        Bucket: 'chrislehneis.com'
+      }
+    })
+  )
+}
 
 // Images
 // ------------------------------------
