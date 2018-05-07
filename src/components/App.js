@@ -13,14 +13,14 @@ const store = configureStore()
 const AppRoutes = ({ animate }) => <BrowserRouter>
   <Switch>
     <Route
-      path='/new-person'
+      path='/people'
       render={()=> <PeopleRoute
         offset={0}
         preview={false}
         title={'NEW PERSON'}
       />}
     />
-    <Route
+{/*    <Route
       path='/preview-person'
       render={()=> <PeopleRoute
         offset={1}
@@ -35,8 +35,8 @@ const AppRoutes = ({ animate }) => <BrowserRouter>
         preview={true}
         title={'SUCCESS'}
       />}
-    />
-    <Redirect to='/new-person' />
+    />*/}
+    <Redirect to='/people' />
   </Switch>
 </BrowserRouter>
 

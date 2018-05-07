@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import React from 'react'
+import '../styles/input.scss'
 
 const Input = ({
   errorMessage,

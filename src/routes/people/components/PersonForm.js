@@ -8,20 +8,23 @@ import {
   validateEmail,
   validateName
 } from '../config/personForm'
+import { Route, Router, Switch } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 
 class PersonForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      errorFields: {}
+      errorFields: {},
+      offset: 0
     }
   }
 
   componentWillMount () {
     // redirect to new-person if form isn't validated
-    if (!this.props.isValidated && location.pathname !== '/new-person') {
-      return this.props.history.push('/new-person')
+    if (!this.props.isValidated && location.pathname !== '/people/new-person') {
+      this.setState({ offset: 0 })
+      return this.props.history.push('/people/new-person')
     }
   }
 
@@ -43,20 +46,23 @@ class PersonForm extends Component {
       }
       validateForm(true)
 
-      return history.push('/preview-person')
+      return history.push('/people/preview-person')
     }
     if (btnLabel === 'Back') {
-      if (location.pathname === '/preview-person') {
-        return history.push('/new-person')
+      if (location.pathname === '/people/preview-person') {
+        this.setState({ offset: 1 })
+        return history.push('/people/new-person')
       }
       // clear person form to initial state
       clearForm()
       // clear errors and go back to new person form
       return this.setState({ errorFields: {} }, () => {
-        return history.push('/new-person')
+        this.setState({ offset: 0 })
+        return history.push('/people/new-person')
       })
     }
     if (btnLabel === 'Submit') {
+      this.setState({ offset: 2 })
       // submit new record
       this.postNewPersonRecord()
     }
@@ -86,7 +92,7 @@ class PersonForm extends Component {
         if (res.payload.age) {
           // person record created successfully
           showLoader(false)
-          return history.push('/success')
+          return history.push('/people/success')
         }
       })
   }
@@ -111,7 +117,7 @@ class PersonForm extends Component {
     }
     showLoader(false)
 
-    return history.push('/new-person')
+    return history.push('/people/new-person')
   }
 
   handleInputChange (val, type, label) {
@@ -217,7 +223,7 @@ class PersonForm extends Component {
   render () {
     const formProps = {
       buttons: buttons[this.props.offset],
-      disableTabs: location.pathname !== '/new-person',
+      disableTabs: location.pathname !== '/people/new-person',
       errorFields: this.state.errorFields,
       formInputs: formInputs,
       handleButtonClick: (label) => this.handleButtonClick(label),
@@ -225,12 +231,20 @@ class PersonForm extends Component {
       handleOnBlur: (field, value) => this.handleOnBlur(field, value),
       inputValues: this.props.formFields,
       loading: this.props.loading,
-      offset: this.props.offset,
+      offset: this.state.offset,
       successRecord: this.props.successRecord,
       title: this.props.title
     }
 
-    return <Form {...formProps} />
+    const routes = ['/people/new-person', '/people/preview-person', '/people/success']
+    console.log(formProps.offset)
+    return <Switch>
+      {routes.map((route, i) => <Route
+        key={`person-form-${i}`}
+        render={() => <Form {...formProps} />}
+        to={route}
+      />)}
+    </Switch>
   }
 }
 

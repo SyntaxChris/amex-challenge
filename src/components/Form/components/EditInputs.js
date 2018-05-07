@@ -1,5 +1,6 @@
 import Input from './Input'
 import React from 'react'
+import '../styles/input.scss'
 
 const EditInputs = ({
   errorFields,
