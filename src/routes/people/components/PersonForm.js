@@ -1,5 +1,4 @@
 import Form from '../../../components/Form/index'
-import FormLogo from './FormLogo'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import {
@@ -12,14 +11,6 @@ import {
 import { withRouter } from 'react-router-dom'
 
 class PersonForm extends Component {
-  static propTypes () {
-    return {
-      history: React.PropTypes.shape({
-        push: React.PropTypes.func.isRequired
-      })
-    }
-  }
-
   constructor (props) {
     super(props)
     this.state = {
@@ -88,16 +79,39 @@ class PersonForm extends Component {
     // attempt to create person
     createPerson(payload)
       .then((res) => {
-        showLoader(false)
+        if (res.type === 'HANDLE_PERSON_CREATE_ERROR') {
+          // handle error
+          return this.handleError(res.payload.response)
+        }
         if (res.payload.age) {
+          // person record created successfully
+          showLoader(false)
           return history.push('/success')
         }
-        const { errorFields } = this.state
-        errorFields.email = res.payload.response.message
-        this.setState({ errorFields })
-
-        return history.push('/new-person')
       })
+  }
+
+  handleError (err) {
+    const {
+      handleAppError,
+      history,
+      showLoader
+    } = this.props
+    if (err.statusCode == 403) {
+      //forbidden
+      const { errorFields } = this.state
+      errorFields.email = err.message
+      this.setState({ errorFields })
+    }
+    if (err.statusCode == 500) {
+      // internal server error
+      handleAppError(err.message)
+      // hide header bar after 3 seconds
+      setTimeout(() => handleAppError(''), 3000)
+    }
+    showLoader(false)
+
+    return history.push('/new-person')
   }
 
   handleInputChange (val, type, label) {
@@ -218,6 +232,36 @@ class PersonForm extends Component {
 
     return <Form {...formProps} />
   }
+}
+
+const formFieldPropTypes = {
+  date: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired
+}
+const successRecordPropTypes = {
+  date_of_birth: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired
+}
+
+PersonForm.propTypes = {
+  clearForm: PropTypes.func.isRequired,
+  createPerson: PropTypes.func.isRequired,
+  formFields: PropTypes.shape(formFieldPropTypes).isRequired,
+  formFieldErros: PropTypes.object,
+  handleAppError: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }),
+  offset: PropTypes.number.isRequired,
+  showLoader: PropTypes.func.isRequired,
+  successRecord: PropTypes.shape(successRecordPropTypes).isRequired,
+  updateFormField: PropTypes.func.isRequired,
+  validateForm: PropTypes.func.isRequired
 }
 
 export default withRouter(PersonForm)

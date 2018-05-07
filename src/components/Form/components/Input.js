@@ -2,27 +2,32 @@ import _ from 'lodash'
 import React from 'react'
 
 const Input = ({
-  disableTabs,
   errorMessage,
   handleInputChange,
   handleOnBlur,
   inputValues,
   label,
-  placeholders,
+  offset,
+  fields,
   readOnly,
   type
 }) => <div className={`input-container ${type}${errorMessage ? ' error' : ''}`}>
   <div className='label'>{label}</div>
-  {placeholders.map((placeholder, i) => <input
+  {fields.map((field, i) => <input
+    aria-label={field}
+    aria-required='true'
     key={i}
+    // validate form if content exists
     onBlur={(e) => handleOnBlur(type, e.target.value)}
-    onChange={(e) => handleInputChange(e.target.value, type, placeholder)}
-    placeholder={placeholder}
-    name={placeholder}
+    // add content to redux store
+    onChange={(e) => handleInputChange(e.target.value, type, field)}
+    placeholder={field}
+    name={field}
     readOnly={readOnly}
-    tabIndex={disableTabs ? -1 : ''}
+    // prevent tabbing into form fields when out of view
+    tabIndex={offset > 0 ? -1 : ''}
     type='text'
-    value={type === 'date' ? inputValues[placeholder] : inputValues}
+    value={type === 'date' ? inputValues[field] : inputValues}
   />)}
   {errorMessage
     ? <div className='error-label'>{errorMessage}</div>

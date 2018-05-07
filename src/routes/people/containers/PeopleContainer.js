@@ -7,12 +7,14 @@ import {
   updateFormField,
   validateForm
 } from '../../../modules/actions/people'
+import { handleAppError } from '../../../modules/actions/app'
 import People from '../components/People'
 import React from 'react'
 
 const mapDispatchToProps = {
   clearForm,
   createPerson,
+  handleAppError,
   handleFormErrors,
   showLoader,
   updateFormField,
@@ -20,7 +22,6 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = state => ({
-  fetching: state.people.fetching,
   formFields: state.people.formFields,
   formFieldErrors: state.people.formFieldErrors,
   isValidated: state.people.isValidated,

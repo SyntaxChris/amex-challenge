@@ -13,17 +13,17 @@ export const buttons = [
 export const formInputs = [
   {
     label: 'name',
-    placeholders: ['name'],
+    fields: ['name'],
     type: 'name'
   },
   {
     label: 'date of birth',
-    placeholders: ['mm', 'dd', 'yyyy'],
+    fields: ['mm', 'dd', 'yyyy'],
     type: 'date'
   },
   {
     label: 'email',
-    placeholders: ['email'],
+    fields: ['email'],
     type: 'email'
   }
 ]

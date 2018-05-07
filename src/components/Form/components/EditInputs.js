@@ -17,7 +17,7 @@ const EditInputs = ({
       : inputValues[formInput.label]}
     key={i}
     label={formInput.label}
-    placeholders={formInput.placeholders}
+    fields={formInput.fields}
     readOnly={formInput.readOnly}
     type={formInput.type}
   />)
