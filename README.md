@@ -100,11 +100,11 @@ The project structure is actually two applications in one repository. The `src` 
 └── migrations               # People table schema migration 
 └── seeds                    # Faker data for people table
 ├── src                      # Client source code
-│   ├── components           # App level components
+│   ├── components           # App level reusable components
 │   ├── modules              # Redux actions and reducers
 │   ├── routes               # Dynamic import routes
 │   │   ├── people          
-│   │   │   ├── components   # People route components
+│   │   │   ├── components   # People route reusable components
 │   │   │   ├── config       # Person form configuration file
 │   │   │   ├── containers   # Redux connect module
 │   │   │   ├── index.js     
@@ -117,7 +117,7 @@ The project structure is actually two applications in one repository. The `src` 
 └── manifest.js              # glue configuration file
 └── postcss.config.js      
 └── server.js                # api server entry point
-└── webpack.config.js        # asset compiling, hot-module reloading, and static asset deployment
+└── webpack.config.js        # webpack asset compiling, and static asset deployment
 ```
 
 ## Live Development
