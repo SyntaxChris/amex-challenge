@@ -117,6 +117,7 @@ The project structure is actually two applications in one repository. The `src` 
 └── manifest.js              # glue configuration file
 └── postcss.config.js      
 └── server.js                # api server entry point
+└── webpack.config.js        # asset compiling, hot-module reloading, and static asset deployment
 ```
 
 ## Live Development
