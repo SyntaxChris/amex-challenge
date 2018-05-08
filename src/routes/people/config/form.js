@@ -1,8 +1,7 @@
 import moment from 'moment'
+import React from 'react'
 // =====================
-
 // form field components
-
 // =====================
 export const buttons = [
   [{ label: 'Preview' }],
@@ -28,10 +27,25 @@ export const formInputs = [
   }
 ]
 
+export const views = [
+  {
+    inputs: formInputs,
+    path: '/person/new',
+    title: 'NEW PERSON'
+  }, 
+  {
+    inputs: formInputs,
+    path: '/person/preview',
+    title: 'PREVIEW'
+  }, 
+  {
+    path: '/person/success',
+    title: 'SUCCESS'
+  }
+]
+
 // ======================
-
 // form field validations
-
 // ======================
 export function validateDate (date) {
   const dateFormat = `${date.yyyy}-${date.mm}-${date.dd}`

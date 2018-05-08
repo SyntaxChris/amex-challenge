@@ -3,7 +3,7 @@ import configureStore from '../store/config'
 import Header from './Header'
 import { Provider } from 'react-redux'
 import React, { Component } from 'react'
-import PeopleRoute from '../routes/people'
+import PeopleRoutes from '../routes/people'
 import '../styles/application.scss'
 
 // initialize store
@@ -12,31 +12,8 @@ const store = configureStore()
 // top level routes
 const AppRoutes = ({ animate }) => <BrowserRouter>
   <Switch>
-    <Route
-      path='/people'
-      render={()=> <PeopleRoute
-        offset={0}
-        preview={false}
-        title={'NEW PERSON'}
-      />}
-    />
-{/*    <Route
-      path='/preview-person'
-      render={()=> <PeopleRoute
-        offset={1}
-        preview={true}
-        title={'PREVIEW'}
-      />}
-    />
-    <Route
-      path='/success'
-      render={()=> <PeopleRoute
-        offset={2}
-        preview={true}
-        title={'SUCCESS'}
-      />}
-    />*/}
-    <Redirect to='/people' />
+    <Route path='/' render={()=> <PeopleRoutes />} />
+    <Redirect to='/' />
   </Switch>
 </BrowserRouter>
 

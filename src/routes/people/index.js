@@ -1,19 +1,18 @@
 import Loadable from 'react-loadable'
 import React from 'react'
+import { Redirect, Route, Switch } from 'react-router-dom'
 
-// Loadable component takes advantage of dynamic imports so we only render what is requested
-const PeopleRoute = Loadable({
-  loader () {
-    return import('./containers/PeopleContainer')
-  },
-  loading () { return null },
-  render (loaded, props) {
-    const Component = loaded.default
-
-    return <div className='people-container'>
-      <Component {...props} />
-    </div>
-  }
+const PersonRoute = Loadable({
+  loader () { return import('./containers/PersonContainer') },
+  loading() { return null }
 })
 
-export default PeopleRoute
+// add all people routes here
+const PeopleRoutes = () => <div className='people-container'>
+  <Switch>
+    <Route to='/person' render={() => <PersonRoute />} />
+    <Redirect to='/person' />
+  </Switch>
+</div>
+
+export default PeopleRoutes

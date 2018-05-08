@@ -8,7 +8,7 @@ import {
   validateForm
 } from '../../../modules/actions/people'
 import { handleAppError } from '../../../modules/actions/app'
-import People from '../components/People'
+import Person from '../components/Person'
 import React from 'react'
 
 const mapDispatchToProps = {
@@ -29,4 +29,4 @@ const mapStateToProps = state => ({
   successRecord: state.people.successRecord
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(People)
+export default connect(mapStateToProps, mapDispatchToProps)(Person)

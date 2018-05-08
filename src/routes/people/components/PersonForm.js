@@ -6,10 +6,10 @@ import {
   formInputs,
   validateDate,
   validateEmail,
-  validateName
-} from '../config/personForm'
-import { Route, Router, Switch } from 'react-router-dom'
-import { withRouter } from 'react-router-dom'
+  validateName,
+  views as formViews
+} from '../config/form'
+import { Route, Switch, withRouter } from 'react-router-dom'
 
 class PersonForm extends Component {
   constructor (props) {
@@ -22,9 +22,9 @@ class PersonForm extends Component {
 
   componentWillMount () {
     // redirect to new-person if form isn't validated
-    if (!this.props.isValidated && location.pathname !== '/people/new-person') {
+    if (!this.props.isValidated && location.pathname !== '/person/new') {
       this.setState({ offset: 0 })
-      return this.props.history.push('/people/new-person')
+      return this.props.history.push('/person/new')
     }
   }
 
@@ -36,7 +36,7 @@ class PersonForm extends Component {
       history,
       validateForm
     } = this.props
-
+    console.log('btn label', btnLabel)
     if (btnLabel === 'Preview') {
       // validate form
       const formIsValid = await this.validateFormFields()
@@ -44,21 +44,22 @@ class PersonForm extends Component {
       if (!formIsValid) {
         return validateForm(false)
       }
-      validateForm(true)
+      await validateForm(true)
+      await this.setState({ offset: 1 })
 
-      return history.push('/people/preview-person')
+      return await history.push('/person/preview')
     }
     if (btnLabel === 'Back') {
-      if (location.pathname === '/people/preview-person') {
+      if (location.pathname === '/person/preview') {
         this.setState({ offset: 1 })
-        return history.push('/people/new-person')
+        return history.push('/person/new')
       }
       // clear person form to initial state
       clearForm()
       // clear errors and go back to new person form
       return this.setState({ errorFields: {} }, () => {
         this.setState({ offset: 0 })
-        return history.push('/people/new-person')
+        return history.push('/person/new')
       })
     }
     if (btnLabel === 'Submit') {
@@ -92,7 +93,7 @@ class PersonForm extends Component {
         if (res.payload.age) {
           // person record created successfully
           showLoader(false)
-          return history.push('/people/success')
+          return history.push('/person/success')
         }
       })
   }
@@ -117,7 +118,7 @@ class PersonForm extends Component {
     }
     showLoader(false)
 
-    return history.push('/people/new-person')
+    return history.push('/person/new')
   }
 
   handleInputChange (val, type, label) {
@@ -222,8 +223,8 @@ class PersonForm extends Component {
 
   render () {
     const formProps = {
-      buttons: buttons[this.props.offset],
-      disableTabs: location.pathname !== '/people/new-person',
+      buttons: buttons[this.state.offset],
+      disableTabs: location.pathname !== '/person/new',
       errorFields: this.state.errorFields,
       formInputs: formInputs,
       handleButtonClick: (label) => this.handleButtonClick(label),
@@ -231,20 +232,23 @@ class PersonForm extends Component {
       handleOnBlur: (field, value) => this.handleOnBlur(field, value),
       inputValues: this.props.formFields,
       loading: this.props.loading,
-      offset: this.state.offset,
+      offset: this.props.offset,
       successRecord: this.props.successRecord,
       title: this.props.title
     }
 
-    const routes = ['/people/new-person', '/people/preview-person', '/people/success']
-    console.log(formProps.offset)
-    return <Switch>
-      {routes.map((route, i) => <Route
-        key={`person-form-${i}`}
-        render={() => <Form {...formProps} />}
-        to={route}
-      />)}
-    </Switch>
+    return <Form {...formProps} />
+
+    // return <Switch>
+    //   {formViews.map(({ path, title }, i) => <Route
+    //     key={`person-form-${i}`}
+    //     to={path}
+    //     render={() => <Form
+    //       // combine formProps with viewProps
+    //       {...{ ...formProps, title }}
+    //     />}
+    //   />)}
+    // </Switch>
   }
 }
 
@@ -271,7 +275,6 @@ PersonForm.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }),
-  offset: PropTypes.number.isRequired,
   showLoader: PropTypes.func.isRequired,
   successRecord: PropTypes.shape(successRecordPropTypes).isRequired,
   updateFormField: PropTypes.func.isRequired,
