@@ -9,7 +9,12 @@ import {
   isValidName,
   formViews
 } from '../config/form'
-import { Route, withRouter } from 'react-router-dom'
+import {
+  Redirect,
+  Route,
+  Switch,
+  withRouter
+} from 'react-router-dom'
 
 class PersonForm extends Component {
   constructor (props) {
@@ -22,16 +27,16 @@ class PersonForm extends Component {
 
   componentWillMount () {
     const { history } = this.props
-    // redirect to /person/new if form isn't validated
-    if (!this.state.formValidated && location.pathname !== '/person/new') {
-      return history.push('/person/new')
-    }
     // url update listener
     history.listen((location, action) => {
       if (action === 'POP' && !this.state.formValidated) {
         return history.push('/person/new')
       }
     })
+    // redirect to /person/new if form isn't validated
+    if (!this.state.formValidated && location.pathname !== '/person/new') {
+      return history.push('/person/new')
+    }
   }
 
   async handleButtonClick (btnLabel) {
@@ -92,8 +97,7 @@ class PersonForm extends Component {
         if (res.payload.age) {
           // person record created successfully
           showLoader(false)
-
-          return history.push('/person/submitted')
+          this.setState({ formValidated: false}, () => history.push('/person/submitted'))
         }
       })
   }
@@ -234,11 +238,14 @@ class PersonForm extends Component {
       title: this.props.title
     }
 
-    return <Route path='/person/:view' render={({ match }) => {
-      const viewProps = formViews[match.params.view]
-      // combine form props and view props
-      return <Form {...{...formProps, ...viewProps }} />
-    }} />
+    return <Switch>
+      <Route path='/person/:view' render={({ match }) => {
+        const viewProps = formViews[match.params.view]
+        // combine form props and view props
+        return <Form {...{...formProps, ...viewProps }} />
+      }} />
+      <Redirect to='/person/new' />
+    </Switch>
   }
 }
 
