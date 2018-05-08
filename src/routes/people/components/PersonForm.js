@@ -29,6 +29,7 @@ class PersonForm extends Component {
     const { history } = this.props
     // url update listener
     history.listen((location, action) => {
+      // prevent redirect to preview or submitted page if form isn't validated
       if (action === 'POP' && !this.state.formValidated) {
         return history.push('/person/new')
       }
