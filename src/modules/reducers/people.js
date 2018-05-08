@@ -2,12 +2,10 @@ import {
   CLEAR_FORM,
   HANDLE_PERSON_CREATE_ERROR,
   HANDLE_PERSON_CREATE_SUCCESS,
-  HANDLE_FORM_ERRORS,
   LOADING,
   REQUEST,
   UPDATE_FORM_FIELDS,
-  VALIDATE_FORM
-} from '../actions/types'
+} from '../actions/people'
 
 const initialState = {
   loading: false,
@@ -20,8 +18,6 @@ const initialState = {
     },
     email: ''
   },
-  formFieldErrors: {},
-  isValidated: false,
   successRecord: {
     name: '',
     age: '',
@@ -67,11 +63,6 @@ function charactersReducer(state = initialState, action) {
           ...state.formFields,
           [action.payload.attr] : action.payload.val
         }
-      }
-    case VALIDATE_FORM:
-      return {
-        ...state,
-        isValidated: action.payload
       }
     default:
       return state

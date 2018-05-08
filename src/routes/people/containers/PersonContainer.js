@@ -4,29 +4,30 @@ import {
   createPerson,
   handleFormErrors,
   showLoader,
-  updateFormField,
-  validateForm
+  updateFormField
 } from '../../../modules/actions/people'
 import { handleAppError } from '../../../modules/actions/app'
-import Person from '../components/Person'
+import PersonForm from '../components/PersonForm'
 import React from 'react'
+import '../../../styles/view.scss'
 
 const mapDispatchToProps = {
   clearForm,
   createPerson,
   handleAppError,
-  handleFormErrors,
   showLoader,
-  updateFormField,
-  validateForm
+  updateFormField
 }
 
 const mapStateToProps = state => ({
   formFields: state.people.formFields,
   formFieldErrors: state.people.formFieldErrors,
-  isValidated: state.people.isValidated,
   loading: state.people.loading,
   successRecord: state.people.successRecord
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Person)
+const PersonView = (props) => <div className='view person'>
+  <PersonForm {...props} />
+</div>
+
+export default connect(mapStateToProps, mapDispatchToProps)(PersonView)

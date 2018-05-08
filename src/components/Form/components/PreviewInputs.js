@@ -1,4 +1,5 @@
 import Input from './Input'
+import PropTypes from 'prop-types'
 import React from 'react'
 
 const PreviewInputs = ({
@@ -17,5 +18,18 @@ const PreviewInputs = ({
       : inputValues[formInput.type]}
     />
 </div>)
+
+PreviewInputs.propTypes = {
+  formInputs: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string.isRequired,
+    fields: PropTypes.arrayOf(PropTypes.string).isRequired,
+    type: PropTypes.string.isRequired
+  })).isRequired,
+  inputValues: PropTypes.shape({
+    name: PropTypes.string,
+    date: PropTypes.object,
+    email:PropTypes.string
+  })
+}
 
 export default PreviewInputs

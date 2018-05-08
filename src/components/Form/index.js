@@ -30,7 +30,6 @@ const Form = ({
       className='form-scroller'
       style={{ marginLeft: `-${offset * 100}%` }}
     >
-      {console.log(offset)}
       <div className='form-view'>
         <EditInputs
           errorFields={errorFields}

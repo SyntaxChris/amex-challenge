@@ -106,7 +106,7 @@ The project structure is actually two applications in one repository. The `src` 
 │   │   ├── people          
 │   │   │   ├── components   # People route components
 │   │   │   ├── config       # Person form configuration file
-│   │   │   ├── containers   # Redux connect module
+│   │   │   ├── containers   # Redux connect container
 │   │   │   ├── index.js     
 │   │   ├── index.js         
 │   ├── store                # Redux Store

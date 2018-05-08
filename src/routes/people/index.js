@@ -1,16 +1,21 @@
 import Loadable from 'react-loadable'
+import PersonForm from './components/PersonForm'
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-
+// dynamic imports
 const PersonRoute = Loadable({
   loader () { return import('./containers/PersonContainer') },
   loading() { return null }
 })
-
-// add all people routes here
+const PeopleRoute = Loadable({
+  loader () { return import('./containers/PeopleContainer') },
+  loading() { return null }
+})
+// top level people routes
 const PeopleRoutes = () => <div className='people-container'>
   <Switch>
-    <Route to='/person' render={() => <PersonRoute />} />
+    <Route path='/person' component={PersonRoute} />
+    <Route path='/people' component={PeopleRoute} />
     <Redirect to='/person' />
   </Switch>
 </div>
