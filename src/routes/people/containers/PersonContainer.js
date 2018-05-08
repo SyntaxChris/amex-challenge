@@ -26,8 +26,8 @@ const mapStateToProps = state => ({
   successRecord: state.people.successRecord
 })
 
-const PersonView = (props) => <div className='view person'>
+const PersonView = (props) => <section className='view person'>
   <PersonForm {...props} />
-</div>
+</section>
 
 export default connect(mapStateToProps, mapDispatchToProps)(PersonView)

@@ -58,3 +58,20 @@
     }
   }
 }
+
+@media (max-width: 400px) {
+  .header {
+    height: 40px;
+    .container .content svg {
+      height: 35px;
+      width: 35px;
+      top: 2px;
+      left: 2px;
+    }
+    .error-bar {
+      &.active {
+        height: 30px;
+      }
+    }
+  }
+}

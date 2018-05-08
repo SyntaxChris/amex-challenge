@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import AmexLogo from './AmexLogo'
 import '../styles/header'
 
-const Header = ({ error, formFieldErrors }) => <header className='header'>
+const Header = ({ error, formFieldErrors }) => <nav className='header'>
   <div className='container'>
     <div className='content left'><AmexLogo /></div>
     <div className='content mid' />
@@ -14,7 +14,7 @@ const Header = ({ error, formFieldErrors }) => <header className='header'>
       {error}
     </div>
   </div>
-</header>
+</nav>
 
 const mapDispatchToProps = {}
 

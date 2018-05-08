@@ -20,17 +20,17 @@ const Form = ({
   offset,
   successRecord,
   title
-}) => <div className='form-container'>
+}) => <article className='form-container'>
   {loading ? <Loader /> : null}
-  <div className='form-header'>
+  <header className='form-header'>
     <div className='title'>{title}</div>
-  </div>
+  </header>
   <form>
-    <div
+    <figure
       className='form-scroller'
       style={{ marginLeft: `-${offset * 100}%` }}
     >
-      <div className='form-view'>
+      <section className='form-view'>
         <EditInputs
           errorFields={errorFields}
           formInputs={formInputs}
@@ -39,21 +39,21 @@ const Form = ({
           inputValues={inputValues}
           offset={offset}
         />
-      </div>
-      <div className='form-view'>
+      </section>
+      <section className='form-view'>
         <PreviewInputs
           formInputs={formInputs}
           inputValues={inputValues}
         />
-      </div>
-      <div className='form-view'>
+      </section>
+      <section className='form-view'>
         {successRecord.name
           ? <Record record={successRecord} />
           : null}
-      </div>
-    </div>
+      </section>
+    </figure>
   </form>
-  <div className='btn-container'>
+  <footer className='btn-container'>
     {buttons.map((btn, i) => <button
       className='form-btn'
       key={i.toString()}
@@ -61,8 +61,8 @@ const Form = ({
     >
       {btn.label}
     </button>)}
-  </div>
-</div>
+  </footer>
+</article>
 
 const formInputPropTypes = {
   label: PropTypes.string.isRequired,

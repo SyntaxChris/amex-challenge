@@ -6,8 +6,8 @@ const mapDispatchToProps = {}
 
 const mapStateToProps = state => state
 
-const PeopleView = (props) => <div className='view people'>
+const PeopleView = (props) => <section className='view people'>
   <div>People View</div>
-</div>
+</section>
 
 export default connect(mapStateToProps, mapDispatchToProps)(PeopleView)
