@@ -4,25 +4,34 @@ import React, { Component } from 'react'
 import {
   buttons,
   formInputs,
-  validateDate,
-  validateEmail,
-  validateName
-} from '../config/personForm'
-import { withRouter } from 'react-router-dom'
+  isValidDate,
+  isValidEmail,
+  isValidName,
+  formViews
+} from '../config/form'
+import { Route, withRouter } from 'react-router-dom'
 
 class PersonForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      errorFields: {}
+      errorFields: {},
+      formValidated: false
     }
   }
 
   componentWillMount () {
-    // redirect to new-person if form isn't validated
-    if (!this.props.isValidated && location.pathname !== '/new-person') {
-      return this.props.history.push('/new-person')
+    const { history } = this.props
+    // redirect to /person/new if form isn't validated
+    if (!this.state.formValidated && location.pathname !== '/person/new') {
+      return history.push('/person/new')
     }
+    // url update listener
+    history.listen((location, action) => {
+      if (action === 'POP' && !this.state.formValidated) {
+        return history.push('/person/new')
+      }
+    })
   }
 
   async handleButtonClick (btnLabel) {
@@ -30,31 +39,28 @@ class PersonForm extends Component {
       clearForm,
       createPerson,
       formFields,
-      history,
-      validateForm
+      history
     } = this.props
 
     if (btnLabel === 'Preview') {
       // validate form
       const formIsValid = await this.validateFormFields()
-      // set state for redirect when component mounts
-      if (!formIsValid) {
-        return validateForm(false)
-      }
-      validateForm(true)
 
-      return history.push('/preview-person')
+      await formIsValid
+        ? this.setState({ formValidated: true }, () => history.push('/person/preview'))
+        : this.setState({ formValidated: false }, () => history.push('/person/new'))
     }
     if (btnLabel === 'Back') {
-      if (location.pathname === '/preview-person') {
-        return history.push('/new-person')
+      if (location.pathname === '/person/preview') {
+        return history.push('/person/new')
       }
       // clear person form to initial state
       clearForm()
       // clear errors and go back to new person form
-      return this.setState({ errorFields: {} }, () => {
-        return history.push('/new-person')
-      })
+      return this.setState({
+        errorFields: {},
+        formValidated: false
+      }, () => history.push('/person/new'))
     }
     if (btnLabel === 'Submit') {
       // submit new record
@@ -86,7 +92,8 @@ class PersonForm extends Component {
         if (res.payload.age) {
           // person record created successfully
           showLoader(false)
-          return history.push('/success')
+
+          return history.push('/person/submitted')
         }
       })
   }
@@ -111,7 +118,7 @@ class PersonForm extends Component {
     }
     showLoader(false)
 
-    return history.push('/new-person')
+    return history.push('/person/new')
   }
 
   handleInputChange (val, type, label) {
@@ -168,7 +175,7 @@ class PersonForm extends Component {
   }
 
   validateDate () {
-    const errMsg = validateDate(this.props.formFields.date)
+    const errMsg = isValidDate(this.props.formFields.date)
     const { errorFields } = this.state
     if (errMsg) {
       errorFields.date = errMsg
@@ -181,7 +188,7 @@ class PersonForm extends Component {
 
   validateEmail () {
     const { errorFields } = this.state
-    if(!validateEmail(this.props.formFields.email)) {
+    if(!isValidEmail(this.props.formFields.email)) {
       errorFields.email = 'Please enter a valid email address.'
       return this.setState({ errorFields })
     }
@@ -192,7 +199,7 @@ class PersonForm extends Component {
 
   validateName () {
     const { errorFields } = this.state
-    if (!validateName(this.props.formFields.name)) {
+    if (!isValidName(this.props.formFields.name)) {
       errorFields.name = 'Please enter a valid name.'
       return this.setState({ errorFields })
     }
@@ -202,7 +209,6 @@ class PersonForm extends Component {
   }
 
   async validateFormFields () {
-    const { handleFormErrors } = this.props
     await this.setState({ errorFields: {} })
     await this.validateName()
     await this.validateDate()
@@ -216,8 +222,7 @@ class PersonForm extends Component {
 
   render () {
     const formProps = {
-      buttons: buttons[this.props.offset],
-      disableTabs: location.pathname !== '/new-person',
+      disableTabs: location.pathname !== '/person/new',
       errorFields: this.state.errorFields,
       formInputs: formInputs,
       handleButtonClick: (label) => this.handleButtonClick(label),
@@ -225,12 +230,15 @@ class PersonForm extends Component {
       handleOnBlur: (field, value) => this.handleOnBlur(field, value),
       inputValues: this.props.formFields,
       loading: this.props.loading,
-      offset: this.props.offset,
       successRecord: this.props.successRecord,
       title: this.props.title
     }
 
-    return <Form {...formProps} />
+    return <Route path='/person/:view' render={({ match }) => {
+      const viewProps = formViews[match.params.view]
+      // combine form props and view props
+      return <Form {...{...formProps, ...viewProps }} />
+    }} />
   }
 }
 
@@ -257,11 +265,9 @@ PersonForm.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }),
-  offset: PropTypes.number.isRequired,
   showLoader: PropTypes.func.isRequired,
   successRecord: PropTypes.shape(successRecordPropTypes).isRequired,
-  updateFormField: PropTypes.func.isRequired,
-  validateForm: PropTypes.func.isRequired
+  updateFormField: PropTypes.func.isRequired
 }
 
 export default withRouter(PersonForm)

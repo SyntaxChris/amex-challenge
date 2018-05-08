@@ -100,13 +100,13 @@ The project structure is actually two applications in one repository. The `src` 
 └── migrations               # People table schema migration 
 └── seeds                    # Faker data for people table
 ├── src                      # Client source code
-│   ├── components           # App level reusable components
+│   ├── components           # App level components
 │   ├── modules              # Redux actions and reducers
 │   ├── routes               # Dynamic import routes
 │   │   ├── people          
-│   │   │   ├── components   # People route reusable components
+│   │   │   ├── components   # People route components
 │   │   │   ├── config       # Person form configuration file
-│   │   │   ├── containers   # Redux connect module
+│   │   │   ├── containers   # Redux connect container
 │   │   │   ├── index.js     
 │   │   ├── index.js         
 │   ├── store                # Redux Store

@@ -1,17 +1,13 @@
 import { apiConfig } from '../../../config/api'
 import { browserHistory } from 'react-router'
 import { CALL_API } from 'redux-api-middleware'
-import {
-  CLEAR_FORM,
-  HANDLE_FETCH_ERROR,
-  HANDLE_FORM_ERRORS,
-  LOADING,
-  HANDLE_PERSON_CREATE_ERROR,
-  HANDLE_PERSON_CREATE_SUCCESS,
-  REQUEST,
-  UPDATE_FORM_FIELDS,
-  VALIDATE_FORM
-} from './types'
+
+export const CLEAR_FORM = 'CLEAR_FORM'
+export const LOADING = 'LOADING'
+export const HANDLE_PERSON_CREATE_ERROR = 'HANDLE_PERSON_CREATE_ERROR'
+export const HANDLE_PERSON_CREATE_SUCCESS = 'HANDLE_PERSON_CREATE_SUCCESS'
+export const REQUEST = 'REQUEST'
+export const UPDATE_FORM_FIELDS = 'UPDATE_FORM_FIELDS'
 
 export const clearForm = () => ({
   type: CLEAR_FORM,
@@ -23,19 +19,9 @@ export const showLoader = loading => ({
   payload: loading
 })
 
-export const handleFormErrors = (errorMsg) => ({
-  type: HANDLE_FORM_ERRORS,
-  payload: errorMsg
-})
-
 export const updateFormField = (attr, val) => ({
   type: UPDATE_FORM_FIELDS,
   payload: { attr, val }
-})
-
-export const validateForm = (validate) => ({
-  type: VALIDATE_FORM,
-  payload: validate
 })
 
 export const createPerson = (payload, history) => dispatch => {

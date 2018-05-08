@@ -1,5 +1,7 @@
 import _ from 'lodash'
+import PropTypes from 'prop-types'
 import React from 'react'
+import '../styles/input.scss'
 
 const Input = ({
   errorMessage,
@@ -33,5 +35,17 @@ const Input = ({
     ? <div className='error-label'>{errorMessage}</div>
     : null}
 </div>
+
+Input.propTypes = {
+  errorMessage: PropTypes.string,
+  handleInputChange: PropTypes.func.isRequired,
+  handleOnBlur: PropTypes.func.isRequired,
+  inputValues: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  label: PropTypes.string.isRequired,
+  offset: PropTypes.number,
+  fields: PropTypes.arrayOf(PropTypes.string).isRequired,
+  readOnly: PropTypes.bool,
+  type: PropTypes.string.isRequired
+}
 
 export default Input

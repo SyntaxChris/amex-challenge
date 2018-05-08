@@ -1,6 +1,4 @@
-import {
-  HANDLE_APP_ERROR
-} from '../actions/types'
+import { HANDLE_APP_ERROR } from '../actions/app'
 
 const initialState = {
   error: ''

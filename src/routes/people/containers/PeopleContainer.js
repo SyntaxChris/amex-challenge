@@ -1,32 +1,13 @@
 import { connect } from 'react-redux'
-import {
-  clearForm,
-  createPerson,
-  handleFormErrors,
-  showLoader,
-  updateFormField,
-  validateForm
-} from '../../../modules/actions/people'
-import { handleAppError } from '../../../modules/actions/app'
-import People from '../components/People'
 import React from 'react'
+import '../../../styles/view.scss'
 
-const mapDispatchToProps = {
-  clearForm,
-  createPerson,
-  handleAppError,
-  handleFormErrors,
-  showLoader,
-  updateFormField,
-  validateForm
-}
+const mapDispatchToProps = {}
 
-const mapStateToProps = state => ({
-  formFields: state.people.formFields,
-  formFieldErrors: state.people.formFieldErrors,
-  isValidated: state.people.isValidated,
-  loading: state.people.loading,
-  successRecord: state.people.successRecord
-})
+const mapStateToProps = state => state
 
-export default connect(mapStateToProps, mapDispatchToProps)(People)
+const PeopleView = (props) => <div className='view people'>
+  <div>People View</div>
+</div>
+
+export default connect(mapStateToProps, mapDispatchToProps)(PeopleView)

@@ -1,14 +1,4 @@
 import moment from 'moment'
-// =====================
-
-// form field components
-
-// =====================
-export const buttons = [
-  [{ label: 'Preview' }],
-  [{ label: 'Back' }, { label: 'Submit' }],
-  [{ label: 'Back' }]
-]
 
 export const formInputs = [
   {
@@ -28,12 +18,28 @@ export const formInputs = [
   }
 ]
 
-// ======================
+export const formViews = {
+  new: {
+    buttons: [{ label: 'Preview' }],
+    offset: 0,
+    title: 'NEW PERSON'
+  },
+  preview: {
+    buttons: [{ label: 'Back' }, { label: 'Submit' }],
+    offset: 1,
+    title: 'PREVIEW'
+  },
+  submitted: {
+    buttons: [{ label: 'Back' }],
+    offset: 2,
+    title: 'SUCCESS'
+  }
+}
 
+// ======================
 // form field validations
-
 // ======================
-export function validateDate (date) {
+export function isValidDate (date) {
   const dateFormat = `${date.yyyy}-${date.mm}-${date.dd}`
 
   if (moment(dateFormat, 'YYYY-MM-DD', true).isValid()) {
@@ -56,13 +62,13 @@ export function validateDate (date) {
   return ''
 }
 
-export function validateEmail (email) {
+export function isValidEmail (email) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   
   return re.test(String(email).toLowerCase())
 }
 
-export function validateName (name) {
+export function isValidName (name) {
   const re = /^[a-zA-Z ]{2,50}$/
   
   return re.test(String(name))

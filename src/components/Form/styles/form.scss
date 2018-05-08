@@ -37,88 +37,6 @@
       display: relative;
       flex: 1;
       padding: 0 20px;
-      .input-container {
-        position: relative;
-        margin: 30px auto;
-        border: 2px solid #41a2db;
-        padding: 12px;
-        &:first-child {
-          margin-top: 20px;
-        }
-        &:last-child {
-          margin-bottom: 20px;
-        }
-        .label {
-          position: absolute;
-          background-color: #fff;
-          top: -16px;
-          left: 12px;
-          font-size: 21px;
-          color: #41a2db;
-          padding: 0 2px;
-        }
-        input {
-          width: 100%;
-          height: 100%;
-          padding: 6px;
-          font-size: 18px;
-          color: #41a2db;
-          outline: none;
-          border: none;
-          background-color: #fff;
-          font-size: 24px;     
-          font-family: 'Open Sans', sans-serif;
-          &::placeholder {          
-            font-family: 'Open Sans', sans-serif;
-            color: #bbc7ce;
-            font-size: 24px;
-          }
-          &:read-only {
-            &:focus {
-              background-color: #fff;
-            }
-          }
-          &:focus {
-            background-color: rgba(159, 214, 245, 0.3);
-          }
-        }
-        &.date {
-          input {
-            width: 33.33%;
-            text-align: center;
-          }
-        }
-        &.error {
-          border: 2px solid #FF4F41;
-          .label {
-            color: #FF4F41;
-            animation: shake 0.8s ease-in;
-            transform: translate3d(0, 0, 0);
-          }
-          .error-label {
-            position: absolute;
-            background-color: #fff;
-            bottom: -9px;
-            margin: 0 auto;
-            font-size: 15px;
-            color: #FF4F41;
-            padding: 0 2px;
-            text-align: center;
-          }
-          input {
-            color: #FF4F41;
-          }
-        }
-        &.preview {
-          border: 2px solid #05c49b;
-          .label {
-            color: #05c49b;
-          }
-          input {
-            color: #05c49b;
-          }
-        }
-      }
     }
   }
   
@@ -163,44 +81,6 @@
     min-width: 300px;
     .form-header {
       font-size: 28px;
-    }
-    .form-scroller {
-      .form-view {
-        .input-container {
-          padding: 8px;
-          .label {
-            top: -14px;
-            font-size: 18px;
-          }
-          input {
-            font-size: 20px;     
-            &::placeholder {          
-              font-size: 20px;
-            }
-          }
-          &.error {
-            border: 2px solid #FF4F41;
-            .label {
-              color: #FF4F41;
-              animation: shake 0.8s ease-in;
-              transform: translate3d(0, 0, 0);
-            }
-            .error-label {
-              position: absolute;
-              background-color: #fff;
-              bottom: -8px;
-              margin: 0 auto;
-              font-size: 13px;
-              color: #FF4F41;
-              padding: 0 2px;
-              text-align: center;
-            }
-            input {
-              color: #FF4F41;
-            }
-          }
-        }
-      }
     }
   }
 }
