@@ -243,7 +243,7 @@ class PersonForm extends Component {
       {Object.keys(formViews).map((view, i) => <Route
         key={`person-form-route-${i}`}
         path={`/person/${view}`}
-        render={({ match }) => <Form
+        render={() => <Form
           {...formProps}
           {...formViews[view]}
         />}
