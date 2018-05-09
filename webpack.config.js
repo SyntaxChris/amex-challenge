@@ -4,7 +4,7 @@ const path = require('path')
 const config = {
   devServer: {
     historyApiFallback: true,
-    port: 3005
+    port: 3000
   },
   entry: ['babel-polyfill', './src/index.js'],
   plugins: [],
