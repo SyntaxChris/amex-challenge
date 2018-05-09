@@ -240,13 +240,14 @@ class PersonForm extends Component {
     }
 
     return <Switch>
-      <Route
-        path='/person/:view'
+      {Object.keys(formViews).map((view, i) => <Route
+        key={`person-form-route-${i}`}
+        path={`/person/${view}`}
         render={({ match }) => <Form
           {...formProps}
-          {...formViews[match.params.view]}
+          {...formViews[view]}
         />}
-      />
+      />)}
       <Redirect to='/person/new' />
     </Switch>
   }
