@@ -12,12 +12,12 @@ const PeopleRoute = Loadable({
   loading() { return null }
 })
 // top level people routes
-const PeopleRoutes = () => <div className='people-container'>
+const PeopleRoutes = () => <section className='people-container'>
   <Switch>
     <Route path='/person' component={PersonRoute} />
     <Route path='/people' component={PeopleRoute} />
     <Redirect to='/person' />
   </Switch>
-</div>
+</section>
 
 export default PeopleRoutes

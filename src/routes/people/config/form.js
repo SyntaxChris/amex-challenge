@@ -49,6 +49,7 @@ export function isValidDate (date) {
       if (yearsBefore < 0) {
         return 'Wow, someone from the future!'
       }
+
       return 'Must be 18 or older to apply.'
     }
 

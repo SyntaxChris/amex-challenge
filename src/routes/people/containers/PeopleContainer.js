@@ -6,7 +6,7 @@ const mapDispatchToProps = {}
 
 const mapStateToProps = state => state
 
-const PeopleView = (props) => <section className='view people'>
+const PeopleView = props => <section className='view people'>
   <div>People View</div>
 </section>
 

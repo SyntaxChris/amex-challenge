@@ -240,11 +240,13 @@ class PersonForm extends Component {
     }
 
     return <Switch>
-      <Route path='/person/:view' render={({ match }) => {
-        const viewProps = formViews[match.params.view]
-        // combine form props and view props
-        return <Form {...{...formProps, ...viewProps }} />
-      }} />
+      <Route
+        path='/person/:view'
+        render={({ match }) => <Form
+          {...formProps}
+          {...formViews[match.params.view]}
+        />}
+      />
       <Redirect to='/person/new' />
     </Switch>
   }

@@ -1,3 +1,5 @@
+import PersonForm from '../components/PersonForm'
+import React from 'react'
 import { connect } from 'react-redux'
 import {
   clearForm,
@@ -7,8 +9,6 @@ import {
   updateFormField
 } from '../../../modules/actions/people'
 import { handleAppError } from '../../../modules/actions/app'
-import PersonForm from '../components/PersonForm'
-import React from 'react'
 import '../../../styles/view.scss'
 
 const mapDispatchToProps = {
@@ -26,7 +26,7 @@ const mapStateToProps = state => ({
   successRecord: state.people.successRecord
 })
 
-const PersonView = (props) => <section className='view person'>
+const PersonView = props => <section className='view person'>
   <PersonForm {...props} />
 </section>
 
