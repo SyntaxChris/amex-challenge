@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import Form from '../../../components/Form/index'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
@@ -240,14 +241,16 @@ class PersonForm extends Component {
     }
 
     return <Switch>
-      {Object.keys(formViews).map((view, i) => <Route
-        key={`person-form-route-${i}`}
-        path={`/person/${view}`}
-        render={() => <Form
-          {...formProps}
-          {...formViews[view]}
-        />}
-      />)}
+      <Route
+        path='/person/:view'
+        render={({ match }) => {
+          const viewProps = _.has(formViews, match.params.view)
+            ? formViews[match.params.view]
+            : formViews['new']
+
+          return <Form {...formProps} {...viewProps} />
+        }}
+      />
       <Redirect to='/person/new' />
     </Switch>
   }
