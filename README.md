@@ -51,6 +51,7 @@ Your .env file should contain the following:
 ```text
 AWS_SECRET_ACCESS_KEY=aws_secret_access_key
 AWS_ACCESS_KEY_ID=aws_access_key_id
+AWS_CLOUDFRONT_ID=aws_cloudfront_id
 DEV_DB_HOST=127.0.0.1
 DEV_DB_USER=local_db_username
 DEV_DB_PASS=local_db_user_password
@@ -60,10 +61,35 @@ DEV_DB_NAME=amex_people
 Create a database name called `amex_people` in your local mysql database.
 
 ```sql
-> CREATE DATABASE amex_people;
+CREATE DATABASE amex_people;
 ```
 
-Once you granted full permissions to your mysql database, run a database schema migration for your people table.
+Once you granted full permissions to your mysql database, initialize a knex file
+
+```bash
+$ knex init #initialize knexfile
+```
+
+Inside your knexfile format your database config
+
+```javascript
+module.exports = {
+  development: {
+    migrations: { tableName: 'knex_migrations' },
+    seeds: { tableName: './seeds' },
+    client: 'mysql',
+    connection: {
+      host: db_host,
+      user: username,
+      password: password,
+      database: 'amex_people',
+      charset: 'utf8'
+    }
+  }
+}
+```
+
+Run a database schema migration for your people table.
 
 ```bash
 $ knex migrate:latest # create the people table

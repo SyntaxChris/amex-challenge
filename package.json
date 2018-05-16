@@ -5,7 +5,7 @@
   "author": "Chris Lehneis",
   "main": "server.js",
   "scripts": {
-    "deploy": "NODE_ENV=production webpack --mode production",
+    "deploy": "rimraf dist && NODE_ENV=production webpack --mode production",
     "dev": "webpack-dev-server --mode development",
     "inspect": "nodemon --inspect=0.0.0.0 server.js",
     "start": "node server.js",
@@ -58,6 +58,7 @@
     "redux": "^4.0.0",
     "redux-api-middleware": "^2.3.0",
     "redux-thunk": "^2.2.0",
+    "rimraf": "^2.6.2",
     "sass-loader": "^7.0.1",
     "style-loader": "^0.21.0",
     "uglifyjs-webpack-plugin": "^1.2.5",

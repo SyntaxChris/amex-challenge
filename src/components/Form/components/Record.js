@@ -1,9 +1,10 @@
 import CheckMark from './CheckMark'
+import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
 import '../styles/record.scss'
 
-const Record = ({ record }) => <div className='record'>
+const Record = ({ record }) => <section className='record'>
   <div className='record-body'>
     <div className='row'>
       <CheckMark />
@@ -26,6 +27,15 @@ const Record = ({ record }) => <div className='record'>
       <div className='info'>{record.email}</div>
     </div>
   </div>
-</div>
+</section>
+
+Record.propTypes = {
+  record: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    age: PropTypes.number.isRequired,
+    date_of_birth: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired
+  })
+}
 
 export default Record

@@ -91,23 +91,21 @@ config.plugins.push(extractStyles, autoPrefixer)
 // Asset deployment
 // ------------------------------------
 if (process.env.NODE_ENV === 'production') {
-  const s3Config = (bucket) => {
-    return new S3Plugin({
-      directory: 'dist',
-      s3Options: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        region: 'us-east-1'
-      },
-      s3UploadOptions: {
-        Bucket: bucket
-      }
-    })
-  }
-  config.plugins.push(
-    s3Config('chrislehneis.com'),
-    s3Config('www.chrislehneis.com')
-  )
+  config.plugins.push(new S3Plugin({
+    directory: 'dist',
+    s3Options: {
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      region: 'us-east-1'
+    },
+    s3UploadOptions: {
+      Bucket: 'chrislehneis.com'
+    },
+    cloudfrontInvalidateOptions: {
+      DistributionId: process.env.AWS_CLOUDFRONT_ID,
+      Items: ['/*']
+    }
+  }))
 }
 
 // Images
