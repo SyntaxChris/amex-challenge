@@ -1,11 +1,11 @@
-import Input from './Input'
+import InputContainer from './InputContainer'
 import PropTypes from 'prop-types'
 import React from 'react'
 
 const PreviewInputs = ({
-  formInputs,
+  formFields,
   inputValues
-}) => formInputs.map((formInput, i) => <div
+}) => formFields.map((formInput, i) => <div
   key={i.toString()}
   className='input-container preview'
 > 
@@ -14,15 +14,19 @@ const PreviewInputs = ({
     readOnly={true}
     tabIndex={-1}
     value={formInput.type === 'date'
-      ? `${inputValues.date.mm}-${inputValues.date.dd}-${inputValues.date.yyyy}`
+      ? `${inputValues.date_of_birth.month
+          }-${inputValues.date_of_birth.day
+          }-${inputValues.date_of_birth.year}`
       : inputValues[formInput.type]}
     />
 </div>)
 
 PreviewInputs.propTypes = {
-  formInputs: PropTypes.arrayOf(PropTypes.shape({
+  formFields: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string.isRequired,
-    fields: PropTypes.arrayOf(PropTypes.string).isRequired,
+    fields: PropTypes.arrayOf(PropTypes.shape({
+
+    })).isRequired,
     type: PropTypes.string.isRequired
   })).isRequired,
   inputValues: PropTypes.shape({

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import {
   buttons,
-  formInputs,
+  formFields,
   isValidDate,
   isValidEmail,
   isValidName,
@@ -82,10 +82,17 @@ class PersonForm extends Component {
       history,
       showLoader
     } = this.props
-    const { name, date, email } = formFields
+    const {
+      name,
+      date_of_birth,
+      email
+    } = formFields
     const payload = {
       name,
-      date_of_birth: `${date.yyyy}-${date.mm}-${date.dd}`,
+      date_of_birth: `${
+        date_of_birth.year
+      }-${date_of_birth.month
+      }-${date_of_birth.day}`,
       email
     }
     showLoader(true)
@@ -133,19 +140,19 @@ class PersonForm extends Component {
       : this.handleTextInputChange(val, label)
   }
 
-  handleDateInputChange (val, placeholder) {
+  handleDateInputChange (val, label) {
     if (
-      (placeholder === 'mm' && val.length > 2) ||
-      (placeholder === 'dd' && val.length > 2) ||
-      (placeholder === 'yyyy' && val.length > 4) ||
+      (label === 'month' && val.length > 2) ||
+      (label === 'day' && val.length > 2) ||
+      (label === 'year' && val.length > 4) ||
       isNaN(val)
     ) {
       return
     }
     
-    return this.props.updateFormField('date', {
-      ...this.props.formFields.date,
-      [placeholder]: val
+    return this.props.updateFormField('date_of_birth', {
+      ...this.props.formFields.date_of_birth,
+      [label]: val
     })
   }
 
@@ -154,10 +161,11 @@ class PersonForm extends Component {
       if (field === 'name') {
         return this.validateName()
       }
+      console.log('on blur field', field)
       if (field === 'date') {
-        const { mm, dd, yyyy } = this.props.formFields.date
+        const { month, day, year } = this.props.formFields.date_of_birth
         // only validate if all date fields have values
-        if (mm && dd && yyyy) {
+        if (month && day && year) {
           return this.validateDate()
         }
       }
@@ -181,7 +189,7 @@ class PersonForm extends Component {
   }
 
   validateDate () {
-    const errMsg = isValidDate(this.props.formFields.date)
+    const errMsg = isValidDate(this.props.formFields.date_of_birth)
     const { errorFields } = this.state
     if (errMsg) {
       errorFields.date = errMsg
@@ -230,7 +238,7 @@ class PersonForm extends Component {
     const formProps = {
       disableTabs: location.pathname !== '/person/new',
       errorFields: this.state.errorFields,
-      formInputs: formInputs,
+      formFields: formFields,
       handleButtonClick: (label) => this.handleButtonClick(label),
       handleInputChange: (val, type, label) => this.handleInputChange(val, type, label),
       handleOnBlur: (field, value) => this.handleOnBlur(field, value),
@@ -243,13 +251,14 @@ class PersonForm extends Component {
     return <Switch>
       <Route
         path='/person/:view'
-        render={({ match }) => {
-          const viewProps = _.has(formViews, match.params.view)
-            ? formViews[match.params.view]
-            : formViews['new']
-
-          return <Form {...formProps} {...viewProps} />
-        }}
+        render={({ match }) => <Form
+          {...formProps}
+          {...formViews[
+            _.has(formViews, match.params.view)
+              ? match.params.view
+              : 'new'
+          ]}
+        />}
       />
       <Redirect to='/person/new' />
     </Switch>

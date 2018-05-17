@@ -11,10 +11,10 @@ const initialState = {
   loading: false,
   formFields: {
     name: '',
-    date: {
-      mm: '',
-      dd: '',
-      yyyy: ''
+    date_of_birth: {
+      month: '',
+      day: '',
+      year: ''
     },
     email: ''
   },

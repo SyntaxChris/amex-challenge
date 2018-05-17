@@ -1,6 +1,5 @@
 import CheckMark from './components/CheckMark'
 import EditInputs from './components/EditInputs'
-import Input from './components/Input'
 import Loader from './components/Loader'
 import PreviewInputs from './components/PreviewInputs'
 import PropTypes from 'prop-types'
@@ -11,7 +10,7 @@ import './styles/form.scss'
 const Form = ({
   buttons,
   errorFields,
-  formInputs,
+  formFields,
   handleButtonClick,
   handleInputChange,
   handleOnBlur,
@@ -33,7 +32,7 @@ const Form = ({
       <section className='form-view'>
         <EditInputs
           errorFields={errorFields}
-          formInputs={formInputs}
+          formFields={formFields}
           handleInputChange={handleInputChange}
           handleOnBlur={handleOnBlur}
           inputValues={inputValues}
@@ -42,7 +41,7 @@ const Form = ({
       </section>
       <section className='form-view'>
         <PreviewInputs
-          formInputs={formInputs}
+          formFields={formFields}
           inputValues={inputValues}
         />
       </section>
@@ -66,7 +65,10 @@ const Form = ({
 
 const formInputPropTypes = {
   label: PropTypes.string.isRequired,
-  fields: PropTypes.arrayOf(PropTypes.string).isRequired,
+  fields: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string.isRequired,
+    placeholder: PropTypes.string.isRequired
+  })).isRequired,
   type: PropTypes.string.isRequired,
 }
 const successRecordPropTypes = {
@@ -80,7 +82,7 @@ Form.propTypes = {
     label: PropTypes.string.isRequired
   })).isRequired,
   errorFields: PropTypes.object,
-  formInputs: PropTypes.arrayOf(PropTypes.shape(formInputPropTypes)).isRequired,
+  formFields: PropTypes.arrayOf(PropTypes.shape(formInputPropTypes)).isRequired,
   handleButtonClick: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
   handleOnBlur: PropTypes.func.isRequired,

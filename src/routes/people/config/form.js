@@ -1,19 +1,23 @@
 import moment from 'moment'
 
-export const formInputs = [
+export const formFields = [
   {
     label: 'name',
-    fields: ['name'],
+    fields: [{ label: 'name', placeholder: 'name' }],
     type: 'name'
   },
   {
     label: 'date of birth',
-    fields: ['mm', 'dd', 'yyyy'],
+    fields: [
+      { label: 'month', placeholder: 'mm' },
+      { label: 'day', placeholder: 'dd' },
+      { label: 'year', placeholder: 'yyyy' }
+    ],
     type: 'date'
   },
   {
     label: 'email',
-    fields: ['email'],
+    fields: [{ label: 'email', placeholder: 'email' }],
     type: 'email'
   }
 ]
@@ -40,8 +44,7 @@ export const formViews = {
 // form field validations
 // ======================
 export function isValidDate (date) {
-  const dateFormat = `${date.yyyy}-${date.mm}-${date.dd}`
-
+  const dateFormat = `${date.year}-${date.month}-${date.day}`
   if (moment(dateFormat, 'YYYY-MM-DD', true).isValid()) {
     const yearsBefore = moment().diff(dateFormat, 'years', false)
 

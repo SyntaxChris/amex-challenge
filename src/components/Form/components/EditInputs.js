@@ -1,34 +1,38 @@
-import Input from './Input'
+import InputContainer from './InputContainer'
 import PropTypes from 'prop-types'
 import React from 'react'
 import '../styles/input.scss'
 
 const EditInputs = ({
   errorFields,
-  formInputs,
+  formFields,
   handleInputChange,
   handleOnBlur,
   inputValues
-}) => {
-  return formInputs.map((formInput, i) => <Input
+}) => formFields.map((formInput, i) => {
+  const label = formInput.label.split(' ').join('_')
+
+  return <InputContainer
     errorMessage={errorFields[formInput.type]}
     handleInputChange={handleInputChange}
     handleOnBlur={handleOnBlur}
-    inputValues={formInput.type === 'date'
-      ? inputValues[formInput.type]
-      : inputValues[formInput.label]}
+    inputValues={inputValues[label]}
     key={i}
     label={formInput.label}
     fields={formInput.fields}
     readOnly={formInput.readOnly}
     type={formInput.type}
-  />)
-}
+  />
+})
+
 
 EditInputs.propTypes = {
   errorFields: PropTypes.object.isRequired,
-  formInputs: PropTypes.arrayOf(PropTypes.shape({
-    fields: PropTypes.arrayOf(PropTypes.string).isRequired,
+  formFields: PropTypes.arrayOf(PropTypes.shape({
+    fields: PropTypes.arrayOf(PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      placeholder: PropTypes.string.isRequired
+    })).isRequired,
     label: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired
   })).isRequired,
